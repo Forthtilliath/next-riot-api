@@ -5,12 +5,15 @@ import { getItems } from "@/apiRiot";
 import { AxiosError } from "axios";
 import Item from "@/features/items/Item";
 import Searchbar from "@/features/Searchbar";
-import useSearchTerm from "@/utils/hooks/useSearchTerm";
+import { useSearchTerm } from "@/utils/hooks";
+import { filterArrayOfEntries } from "@/utils/methods/array";
 
 type Props = {
   items: ReturnType<typeof filterItems>;
   error: AxiosError;
 };
+
+type T = keyof ReturnType<typeof filterItems>[number][1]
 
 export default function Items({ items, error }: Props) {
   // console.log(items);
@@ -18,11 +21,13 @@ export default function Items({ items, error }: Props) {
   // if (error) return <h2>{error.message}</h2>;
   const [search, onChange, itemsFiltered] = useSearchTerm(items, [
     "name",
-    "colloq",
+    // "colloq",
   ]);
 
   // const purchasableItems = items.filter(([, item]) => item.gold.purchasable);
-  const purchasableItems = itemsFiltered.filter(([, item]) => item.gold.purchasable);
+  const purchasableItems = itemsFiltered.filter(
+    ([, item]) => item.gold.purchasable
+  );
 
   return (
     <>
@@ -52,19 +57,18 @@ export async function getServerSideProps() {
   return { props: { items: filterItems(items) } };
 }
 
-type FilterItemsReturn = ReturnType<typeof filterItems>;
-type FilteredItemType = FilterItemsReturn[number][1];
+// type FilterItemsReturn = ReturnType<typeof filterItems>;
+// type FilteredItemType = FilterItemsReturn[number][1];
 
-function filterItems(items: Items) {
+export type UnionFilter = "name" | "gold" | "image";
+export type ItemFiltered = Pick<Item, UnionFilter>;
+
+export function filterItems(items: Items) {
   type Ids = keyof typeof items;
   const aItems = Object.entries(items) as Array<[Ids, Item]>;
 
-  // type ItemFiltered = Item;
-  type ItemFiltered = Pick<Item, "name" | "gold" | "image">;
-
   const aItemsFiltered = aItems.reduce<Array<[id: Ids, item: ItemFiltered]>>(
     (acc, [id, item]) => {
-      // const itemFiltered: ItemFiltered = { ...item };
       const itemFiltered: ItemFiltered = {
         name: item.name,
         gold: item.gold,

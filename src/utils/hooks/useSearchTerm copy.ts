@@ -1,11 +1,9 @@
-import { filterItems, ItemFiltered, UnionFilter } from "@/pages/items";
 import { ChangeEvent, useState } from "react";
 import { filterArrayOfEntries } from "../methods/array";
 
-export function useSearchTerm<T extends ReturnType<typeof filterItems>>(
-  data: T,
-  propsToCompare: Array<UnionFilter>
-  // propsToCompare: Array<keyof T[number][1]>
+export function useSearchTerm<T extends unknown>(
+  data: Array<T>,
+  propsToCompare: Array<string>,
 ) {
   const [value, setValue] = useState("");
 
@@ -14,9 +12,9 @@ export function useSearchTerm<T extends ReturnType<typeof filterItems>>(
   };
 
   const dataFiltered = data.filter((dataItem) =>
-    filterArrayOfEntries<ItemFiltered>(
-      dataItem,
-      propsToCompare,
+    filterArrayOfEntries(
+      dataItem as [id: string, value: T],
+      propsToCompare as Array<keyof T>,
       value
     )
   );

@@ -6,7 +6,6 @@ import styles from "@/styles/Items.module.scss";
 export default function Item({ name, image }: Partial<Item>) {
   return (
     <div className={styles.itemWrapper}>
-      <div className={styles.col_3}>{name}</div>
       <div>
         {image && (
           <Image
@@ -17,6 +16,7 @@ export default function Item({ name, image }: Partial<Item>) {
           />
         )}
       </div>
+      <div className={styles.col_3}>{name}</div>
     </div>
   );
 }

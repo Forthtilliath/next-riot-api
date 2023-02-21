@@ -7,10 +7,11 @@ type Props = {
 };
 
 export default function Searchbar({ searchTerm, onChange }: Props) {
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {};
+  // const onSubmit = (e: FormEvent<HTMLFormElement>) => {};
 
   return (
-    <form onSubmit={onSubmit}>
+    // <form onSubmit={onSubmit}>
+    <form>
       <label className={styles.inputLabel} htmlFor="input-query">
         Rechercher un objet :
       </label>
