@@ -1,0 +1,13 @@
+@import "./variables";
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title {
+    margin-bottom: 2rem;
+    font-family: $font-title;
+    color: $color-golden-l15;
+  }

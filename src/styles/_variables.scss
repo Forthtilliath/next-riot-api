@@ -1,0 +1,10 @@
+$color-golden: hsl(45, 38%, 69%);
+$color-golden-l15: lighten($color-golden, 15%);
+
+$font-title: "Goldman", cursive;
+$font-text: 'Poppins', sans-serif;;
+
+// :export {
+//     colorGolden: $color-golden;
+//     colorGoldenL15: $color-golden-l15;
+// }

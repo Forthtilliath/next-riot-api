@@ -1,6 +1,13 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import Navbar from "@/features/Navbar";
+import "@/styles/globals.scss";
+import type { AppProps } from "next/app";
+import { CookiesProvider } from "react-cookie";
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <CookiesProvider>
+      <Navbar />
+      <Component {...pageProps} />
+    </CookiesProvider>
+  );
 }
