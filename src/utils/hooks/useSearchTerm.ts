@@ -21,7 +21,9 @@ export function useSearchTerm<T extends ReturnType<typeof filterItems>>(
     )
   );
 
-  return [value, onChange, dataFiltered] as const;
+  const reset = () => setValue('');
+
+  return [value, onChange, dataFiltered, reset] as const;
 }
 
 // name, colloq (array)

@@ -13,13 +13,13 @@ type Props = {
   error: AxiosError;
 };
 
-type T = keyof ReturnType<typeof filterItems>[number][1]
+type T = keyof ReturnType<typeof filterItems>[number][1];
 
 export default function Items({ items, error }: Props) {
   // console.log(items);
 
   // if (error) return <h2>{error.message}</h2>;
-  const [search, onChange, itemsFiltered] = useSearchTerm(items, [
+  const [search, onChange, itemsFiltered, reset] = useSearchTerm(items, [
     "name",
     // "colloq",
   ]);
@@ -38,7 +38,7 @@ export default function Items({ items, error }: Props) {
       <main className={stylesPage.main}>
         <h1 className={stylesPage.title}>ITEMS</h1>
         <menu className={styles.menu}>
-          <Searchbar searchTerm={search} onChange={onChange} />
+          <Searchbar searchTerm={search} onChange={onChange} reset={reset} />
         </menu>
         <div className={styles.container}>
           {error && <h2>{error.message}</h2>}
