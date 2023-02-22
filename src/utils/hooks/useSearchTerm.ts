@@ -5,7 +5,6 @@ import { filterArrayOfEntries } from "../methods/array";
 export function useSearchTerm<T extends ReturnType<typeof filterItems>>(
   data: T,
   propsToCompare: Array<UnionFilter>
-  // propsToCompare: Array<keyof T[number][1]>
 ) {
   const [value, setValue] = useState("");
 
@@ -13,9 +12,9 @@ export function useSearchTerm<T extends ReturnType<typeof filterItems>>(
     setValue(e.target.value);
   };
 
-  const dataFiltered = data.filter((dataItem) =>
+  const dataFiltered = Object.entries(data).filter((dataItem) =>
     filterArrayOfEntries<ItemFiltered>(
-      dataItem,
+      dataItem as [id: string, item: ItemFiltered],
       propsToCompare,
       value
     )

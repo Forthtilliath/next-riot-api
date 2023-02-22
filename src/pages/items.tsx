@@ -6,26 +6,22 @@ import { AxiosError } from "axios";
 import Item from "@/features/items/Item";
 import Searchbar from "@/features/Searchbar";
 import { useSearchTerm } from "@/utils/hooks";
-import { filterArrayOfEntries } from "@/utils/methods/array";
 
 type Props = {
   items: ReturnType<typeof filterItems>;
   error: AxiosError;
 };
 
-type T = keyof ReturnType<typeof filterItems>[number][1];
-
 export default function Items({ items, error }: Props) {
-  // console.log(items);
+  console.log(items);
 
-  // if (error) return <h2>{error.message}</h2>;
   const [search, onChange, itemsFiltered, reset] = useSearchTerm(items, [
     "name",
-    // "colloq",
+    "colloq",
   ]);
 
   // const purchasableItems = items.filter(([, item]) => item.gold.purchasable);
-  const purchasableItems = itemsFiltered.filter(
+  const purchasableItems = Object.values(itemsFiltered).filter(
     ([, item]) => item.gold.purchasable
   );
 
@@ -51,34 +47,23 @@ export default function Items({ items, error }: Props) {
   );
 }
 
+const filterKeys = ["name", "gold", "image", "colloq"] as const;
+
 export async function getServerSideProps() {
   const items = await getItems();
 
+  // return { props: { items: filterItems(items) } };
   return { props: { items: filterItems(items) } };
 }
-
-// type FilterItemsReturn = ReturnType<typeof filterItems>;
-// type FilteredItemType = FilterItemsReturn[number][1];
-
-export type UnionFilter = "name" | "gold" | "image";
+export type UnionFilter = typeof filterKeys[number];
 export type ItemFiltered = Pick<Item, UnionFilter>;
 
 export function filterItems(items: Items) {
-  type Ids = keyof typeof items;
-  const aItems = Object.entries(items) as Array<[Ids, Item]>;
-
-  const aItemsFiltered = aItems.reduce<Array<[id: Ids, item: ItemFiltered]>>(
-    (acc, [id, item]) => {
-      const itemFiltered: ItemFiltered = {
-        name: item.name,
-        gold: item.gold,
-        image: item.image,
-      };
-      const newItem = [id, itemFiltered] as [Ids, typeof itemFiltered];
-
-      return [...acc, newItem];
-    },
-    []
-  );
+  const aItemsFiltered = Object.values(items).map(item => {
+    return Object.fromEntries(
+      filterKeys.map((k) => [k, item[k]])
+    ) as ItemFiltered
+  })
+  
   return aItemsFiltered;
 }
