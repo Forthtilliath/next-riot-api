@@ -1,9 +1,7 @@
 {
-  "titles": {
-    "items": "Objets",
-    "champions": "Champions"
-  },
-  "items": {
-    "title": "Objets"
+  "navbar": {
+    "home": "Home",
+    "champions": "Champions",
+    "items": "Objets"
   }
 }

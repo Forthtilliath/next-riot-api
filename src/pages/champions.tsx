@@ -3,6 +3,7 @@ import stylesPage from "@/styles/Page.module.scss";
 import styles from "@/styles/Champions.module.scss";
 import { getChampions } from "@/apiRiot";
 import { AxiosError } from "axios";
+import { useTranslation } from "next-i18next";
 
 type Props = {
   champions: Awaited<ReturnType<typeof getChampions>>;
@@ -10,6 +11,9 @@ type Props = {
 };
 
 export default function Champions({ champions, error }: Props) {
+  const { t } = useTranslation();
+console.log(t('title'))
+
   if (error) return <h2>{error.message}</h2>;
 
   return (

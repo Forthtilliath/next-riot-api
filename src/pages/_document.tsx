@@ -1,19 +1,6 @@
-// import { getLanguages, getVersions } from "@/apiRiot";
-// import { AxiosError } from "axios";
-import getServerSideProps from "@/lib/serverProps";
 import { Html, Head, Main, NextScript } from "next/document";
 
-// type Props = {
-//   versions: Awaited<ReturnType<typeof getVersions>>;
-//   languages: Awaited<ReturnType<typeof getLanguages>>;
-//   error: AxiosError;
-// };
-
-type A = ReturnType<typeof getServerSideProps>;
-
 export default function Document() {
-  // export default function Document({ versions, languages }: Props) {
-  // console.log({ versions, languages });
   return (
     <Html lang="fr">
       <Head>
@@ -35,15 +22,3 @@ export default function Document() {
     </Html>
   );
 }
-
-// export async function getServerSideProps() {
-//   try {
-//     const [versions, languages] = await Promise.all([
-//       getVersions(),
-//       getLanguages(),
-//     ]);
-//     return { props: { versions, languages } };
-//   } catch (error) {
-//     return { props: { error } };
-//   }
-// }

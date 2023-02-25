@@ -37,10 +37,8 @@ export default function Items({ items, error }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={stylesPage.main}>
-        <h1 className={stylesPage.title}>ITEMS</h1>
-        <menu className={styles.menu}>
-          <Searchbar searchTerm={search} onChange={onChange} reset={reset} />
-        </menu>
+        <h1 className={stylesPage.title}>{t("title")}</h1>
+        <Searchbar searchTerm={search} onChange={onChange} reset={reset} />
         <div className={styles.container}>
           {error && <h2>{error.message}</h2>}
           {purchasableItems.map(([key, item]) => (
@@ -54,10 +52,11 @@ export default function Items({ items, error }: Props) {
 
 const filterKeys = ["name", "gold", "image", "colloq"] as const;
 
+// TODO Locale = langue dispo
 export async function getServerSideProps({
-  locale = "",
+  locale = "fr",
 }: GetServerSidePropsContext) {
-  const items = await getItems();
+  const items = await getItems(locale);
 
   return {
     props: {
@@ -66,6 +65,7 @@ export async function getServerSideProps({
     },
   };
 }
+
 export type UnionFilterItems = typeof filterKeys[number];
 export type ItemFiltered = Pick<Item, UnionFilterItems>;
 

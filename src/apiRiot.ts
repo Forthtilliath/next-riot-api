@@ -1,5 +1,6 @@
 import Axios from "axios";
 import { setupCache } from "axios-cache-interceptor";
+import { DEFAULT_LANGUAGE, LANGUAGES } from "./utils/constantes";
 
 const BASE_URL_DDRAGON = "https://ddragon.leagueoflegends.com";
 const BASE_URL_STATIC = "https://static.developer.riotgames.com";
@@ -77,11 +78,14 @@ export async function getChampions() {
  * Retourne la liste des objets disponible. Les informations retournées
  * dépendent de la version du jeu ainsi que de la langue
  */
-export async function getItems() {
+export async function getItems(locale: string) {
+  const lang = LANGUAGES.find(lang => lang.trans_key === locale)?.api_lang ?? DEFAULT_LANGUAGE;;
   // TODO : Recupérer version et langue des cookies
   return await fetchDdragon<{ data: Items }>(
-    `/cdn/${options.version}/data/${options.language}/item.json`,
-    "items"
+    `/cdn/${options.version}/data/${lang}/item.json`,
+    // `/cdn/${options.version}/data/${options.language}/item.json`,
+    `${locale}-items`
+    // "items"
   ).then((res) => res.data);
 }
 
