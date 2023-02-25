@@ -24,51 +24,47 @@
 }
 
 .inputLabel {
-    font-size: 1rem;
-    letter-spacing: 1.2px;
-    font-family: $font-text;
-    // text-transform: uppercase;
-  }
+  font-size: 1rem;
+  letter-spacing: 1.2px;
+  font-family: $font-text;
+  // text-transform: uppercase;
+}
 
 .inputWrapper {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin-top: 0.5rem;
-  }
-  
-  .inputField {
-    width: 100%;
-    height: 3rem;
-    padding-left: 1rem;
-    padding-right: 3rem;
-    border-radius: 0.5rem;
-    color: #2d2d2d;
-    background-color: hsl(0, 0%, 90%);
-    font-size: 1.15rem;
-  
-    border: none;
-    outline: none;
-  }
-  
-  .inputField:focus-within {
-    background-color: hsl(0, 0%, 100%);
-  }
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
 
-.btn {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-left: -2rem;
-  // width: 3rem;
-  // height: 3rem;
-  // margin-left: -3rem;
-  color: hsl(0, 0%, 40%);
+.inputField {
+  width: 100%;
+  height: 3rem;
+  padding-left: 1rem;
+  padding-right: 3rem;
+  border-radius: 0.5rem;
+  color: #2d2d2d;
+  background-color: hsl(0, 0%, 90%);
+  font-size: 1.15rem;
 
   border: none;
   outline: none;
-  background: none;
+}
+
+.inputField:focus-within {
+  background-color: hsl(0, 0%, 100%);
+}
+
+.btn {
+  all: initial;
+
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: -2rem;
+  color: hsl(0, 0%, 30%);
 
   transition: transform 0.5s;
+
   cursor: pointer;
 }
 

@@ -6,6 +6,9 @@ import { AxiosError } from "axios";
 import Item from "@/features/items/Item";
 import Searchbar from "@/features/Searchbar";
 import { useSearchTerm } from "@/utils/hooks";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSidePropsContext } from "next";
+import { useTranslation } from "next-i18next";
 
 type Props = {
   items: ReturnType<typeof filterItems>;
@@ -13,14 +16,16 @@ type Props = {
 };
 
 export default function Items({ items, error }: Props) {
-  console.log(items);
+  const { t } = useTranslation("items");
+  // console.log(items);
 
   const [search, onChange, itemsFiltered, reset] = useSearchTerm(items, [
     "name",
     "colloq",
   ]);
 
-  // const purchasableItems = items.filter(([, item]) => item.gold.purchasable);
+  // Garde seulement les objets achetables
+  // TODO: Ajouter des filtres sur les maps
   const purchasableItems = Object.values(itemsFiltered).filter(
     ([, item]) => item.gold.purchasable
   );
@@ -28,7 +33,7 @@ export default function Items({ items, error }: Props) {
   return (
     <>
       <Head>
-        <title>League of Forth</title>
+        <title>{`League of Forth - ${t("title")}`}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={stylesPage.main}>
@@ -49,21 +54,27 @@ export default function Items({ items, error }: Props) {
 
 const filterKeys = ["name", "gold", "image", "colloq"] as const;
 
-export async function getServerSideProps() {
+export async function getServerSideProps({
+  locale = "",
+}: GetServerSidePropsContext) {
   const items = await getItems();
 
-  // return { props: { items: filterItems(items) } };
-  return { props: { items: filterItems(items) } };
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common", "items"])),
+      items: filterItems(items),
+    },
+  };
 }
-export type UnionFilter = typeof filterKeys[number];
-export type ItemFiltered = Pick<Item, UnionFilter>;
+export type UnionFilterItems = typeof filterKeys[number];
+export type ItemFiltered = Pick<Item, UnionFilterItems>;
 
 export function filterItems(items: Items) {
-  const aItemsFiltered = Object.values(items).map(item => {
+  const aItemsFiltered = Object.values(items).map((item) => {
     return Object.fromEntries(
       filterKeys.map((k) => [k, item[k]])
-    ) as ItemFiltered
-  })
-  
+    ) as ItemFiltered;
+  });
+
   return aItemsFiltered;
 }

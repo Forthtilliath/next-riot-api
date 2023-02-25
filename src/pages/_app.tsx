@@ -2,8 +2,9 @@ import Navbar from "@/features/Navbar";
 import "@/styles/globals.scss";
 import type { AppProps } from "next/app";
 import { CookiesProvider } from "react-cookie";
+import { appWithTranslation } from "next-i18next";
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <CookiesProvider>
       <Navbar />
@@ -11,3 +12,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </CookiesProvider>
   );
 }
+
+export default appWithTranslation(App);
