@@ -9,6 +9,7 @@ import { useSearchTerm } from "@/utils/hooks";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetServerSidePropsContext } from "next";
 import { useTranslation } from "next-i18next";
+import { getSSP_Translation } from "@/lib/serverProps";
 
 type Props = {
   items: ReturnType<typeof filterItems>;
@@ -53,6 +54,18 @@ export default function Items({ items, error }: Props) {
 const filterKeys = ["name", "gold", "image", "colloq"] as const;
 
 // TODO Locale = langue dispo
+// export async function getServerSideProps({
+//   locale = "fr",
+// }: GetServerSidePropsContext) {
+//   const items = await getItems(locale);
+
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ["common", "items"])),
+//       items: filterItems(items),
+//     },
+//   };
+// }
 export async function getServerSideProps({
   locale = "fr",
 }: GetServerSidePropsContext) {
@@ -60,7 +73,7 @@ export async function getServerSideProps({
 
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "items"])),
+      ...(await getSSP_Translation({locale, ns:["common", "items"]})),
       items: filterItems(items),
     },
   };

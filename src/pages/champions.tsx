@@ -12,7 +12,6 @@ type Props = {
 
 export default function Champions({ champions, error }: Props) {
   const { t } = useTranslation();
-console.log(t('title'))
 
   if (error) return <h2>{error.message}</h2>;
 
