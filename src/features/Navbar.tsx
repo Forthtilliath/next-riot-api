@@ -1,18 +1,26 @@
-import Link from "next/link";
-import styles from "@/styles/Navbar.module.scss";
-import { useRouter } from "next/router";
-import { PropsWithChildren } from "react";
-import SwitchLanguage from "./SwitchLanguage";
-import classNames from "classnames";
-import Image from "next/image";
+import { PropsWithChildren } from 'react';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import classNames from 'classnames';
+
+import SwitchLanguage from './SwitchLanguage';
+
+import styles from '@/styles/Navbar.module.scss';
 
 export default function Navbar() {
   const { pathname } = useRouter();
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
-        <Image src={"/assets/LoL_icon.svg"} alt="logo" width={48} height={48} />
-        <p>When it's Worth,<br/>Thanks to Forth</p>
+        <Image src={'/assets/LoL_icon.svg'} alt="logo" width={48} height={48} />
+        <p>
+          When it's Worth,
+          <br />
+          Thanks to Forth
+        </p>
       </div>
       <menu className={styles.menu}>
         <NavItem pathname={pathname} href="/">
@@ -35,20 +43,10 @@ type NavItemProps = {
   pathname: string;
 };
 
-function NavItem({
-  href,
-  pathname,
-  children,
-}: PropsWithChildren<NavItemProps>) {
+function NavItem({ href, pathname, children }: PropsWithChildren<NavItemProps>) {
   return (
     <li className={styles.navItem}>
-      <Link
-        href={href}
-        className={classNames(
-          styles.navLink,
-          pathname === href && styles.active
-        )}
-      >
+      <Link href={href} className={classNames(styles.navLink, pathname === href && styles.active)}>
         {children}
       </Link>
     </li>

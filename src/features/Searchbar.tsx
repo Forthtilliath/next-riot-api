@@ -1,6 +1,8 @@
-import React from "react";
-import styles from "@/styles/Items.module.scss";
-import { useTranslation } from "next-i18next";
+import React from 'react';
+
+import { useTranslation } from 'next-i18next';
+
+import styles from '@/styles/Items.module.scss';
 
 type Props = {
   searchTerm: string;
@@ -9,7 +11,7 @@ type Props = {
 };
 
 export default function Searchbar({ searchTerm, reset, onChange }: Props) {
-  const { t } = useTranslation("items");
+  const { t } = useTranslation('items');
   // const label = `${t("search-label")}:`;
   // console.log({ label });
   // const onSubmit = (e: FormEvent<HTMLFormElement>) => {};
@@ -19,7 +21,7 @@ export default function Searchbar({ searchTerm, reset, onChange }: Props) {
     <form>
       <label className={styles.inputLabel} htmlFor="input-query">
         {/* {label} */}
-        {`${t("search-label")} :`}
+        {`${t('search-label')} :`}
         {/* Rechercher un objet : */}
       </label>
       <div className={styles.inputWrapper}>

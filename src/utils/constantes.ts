@@ -1,14 +1,15 @@
 export const LANGUAGES = [
   {
-    trans_key: "fr",
-    image: "/assets/France-Flag.webp",
-    api_lang: "fr_FR",
+    locale: 'fr',
+    locale_full: 'fr_FR',
+    flag: '/assets/France-Flag.webp',
   },
   {
-    trans_key: "en",
-    image: "/assets/United-Kingdom-flag.webp",
-    api_lang: "en_US",
+    locale: 'en',
+    locale_full: 'en_US',
+    flag: '/assets/United-Kingdom-flag.webp',
   },
 ] as const;
 
-export const DEFAULT_LANGUAGE: TLanguageApi = "fr_FR";
+export const DEFAULT_LOCALE: TLocale = 'fr';
+export const DEFAULT_LOCALE_FULL: TLocaleFull = 'fr_FR';

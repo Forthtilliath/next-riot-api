@@ -1,17 +1,21 @@
-import { LANGUAGES } from "@/utils/constantes";
-import { useTranslation } from "next-i18next";
-import Image from "next/image";
-import React from "react";
-import styles from "@/styles/Navbar.module.scss";
-import classNames from "classnames";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import React from 'react';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import classNames from 'classnames';
+import { useTranslation } from 'next-i18next';
+
+import { LANGUAGES } from '@/utils/constantes';
+
+import styles from '@/styles/Navbar.module.scss';
 
 export default function SwitchLanguage() {
   return (
     <div className={styles.btnsWrapper}>
       {LANGUAGES.map((lang) => (
-        <ButtonLanguage key={lang.trans_key} language={lang} />
+        <ButtonLanguage key={lang.locale} language={lang} />
       ))}
     </div>
   );
@@ -23,7 +27,7 @@ type ButtonProps = {
 export function ButtonLanguage({ language }: ButtonProps) {
   const { i18n } = useTranslation();
 
-  const active = i18n.language === language.trans_key;
+  const active = i18n.language === language.locale;
   const { pathname } = useRouter();
 
   return (
@@ -31,14 +35,9 @@ export function ButtonLanguage({ language }: ButtonProps) {
       // onClick={() => i18n.changeLanguage(language.trans_key)}
       className={classNames(styles.btn, { [styles.active]: active })}
       href={pathname}
-      locale={language.trans_key}
+      locale={language.locale}
     >
-      <Image
-        src={language.image}
-        alt={language.trans_key}
-        width={64}
-        height={64}
-      />
+      <Image src={language.flag} alt={language.locale} width={64} height={64} />
     </Link>
   );
   // return (

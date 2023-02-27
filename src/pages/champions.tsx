@@ -1,9 +1,11 @@
-import Head from "next/head";
-import stylesPage from "@/styles/Page.module.scss";
-import styles from "@/styles/Champions.module.scss";
-import { getChampions } from "@/apiRiot";
-import { AxiosError } from "axios";
-import { useTranslation } from "next-i18next";
+import Head from 'next/head';
+
+import { getChampions } from '@/apiRiot';
+import { AxiosError } from 'axios';
+import { useTranslation } from 'next-i18next';
+
+import styles from '@/styles/Champions.module.scss';
+import stylesPage from '@/styles/Page.module.scss';
 
 type Props = {
   champions: Awaited<ReturnType<typeof getChampions>>;
