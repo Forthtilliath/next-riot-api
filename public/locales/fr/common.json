@@ -3,5 +3,9 @@
     "home": "Home",
     "champions": "Champions",
     "items": "Objets"
+  },
+  "errors": {
+    "fetch": "Erreur lors de la récupération des données",
+    "fetch-items": "Erreur lors de la récupération des objets"
   }
 }

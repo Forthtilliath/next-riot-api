@@ -1,7 +1,7 @@
-import { getLanguages, getMaps, getVersions } from '@/apiRiot';
 import { GetServerSidePropsContext } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
+import { getLanguages, getMaps, getVersions } from '@/utils/api/apiRiot';
 import { DEFAULT_LOCALE } from '@/utils/constantes';
 
 export default async function getServerSideProps(_ctx: GetServerSidePropsContext) {

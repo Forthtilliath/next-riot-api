@@ -1,4 +1,8 @@
 {
   "title": "Objets",
-  "search-label": "Rechercher un objet "
+  "search-label": "Rechercher un objet ",
+  "maps": {
+    "11": "Faille de l'invocateur",
+    "12": "Abîme hurlant"
+  }
 }

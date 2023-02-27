@@ -1,3 +1,9 @@
+/**
+ * Simplifed version of setter of useState hook
+ * @param **T** - Type of the value of useState hook
+ */
+type TSetter<T> = React.Dispatch<React.SetStateAction<T>>;
+
 type Data = Record<string, unknown>;
 
 type Champion = {
@@ -88,3 +94,15 @@ type MapLol = {
   mapName: string;
   notes: string;
 }
+
+type THasError = {
+  hasError: true;
+  /** Key for translation */
+  key: string;
+}
+type TNoError = {
+  hasError: false;
+}
+type TError = THasError | TNoError;
+
+type ObjectValues<T> = T[keyof T];

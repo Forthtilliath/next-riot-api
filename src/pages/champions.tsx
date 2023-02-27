@@ -1,8 +1,9 @@
 import Head from 'next/head';
 
-import { getChampions } from '@/apiRiot';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'next-i18next';
+
+import { getChampions } from '@/utils/api/apiRiot';
 
 import styles from '@/styles/Champions.module.scss';
 import stylesPage from '@/styles/Page.module.scss';

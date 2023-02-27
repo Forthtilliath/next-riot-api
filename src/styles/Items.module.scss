@@ -1,8 +1,63 @@
-@import "./variables";
+@import './variables';
 
 .menu {
   display: flex;
   justify-content: space-around;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.mapsWrapper {
+  display: flex;
+}
+
+.mapImage {
+  --border-size: 0px;
+  border-radius: 0.5rem;
+  width: 80px;
+  height: 80px;
+  position: relative;
+
+  background-position: center;
+  background-size: cover;
+  border: var(--border-size) solid $color-golden;
+
+  // cache l'id de la map
+  color: transparent;
+  user-select: none;
+
+  &.mapSummonerRift {
+    background-image: url('https://ddragon.leagueoflegends.com/cdn/13.4.1/img/map/map11.png');
+  }
+  &.mapHowlingAbyss {
+    background-image: url('https://ddragon.leagueoflegends.com/cdn/13.4.1/img/map/map12.png');
+  }
+
+  &[active='true'] {
+    --border-size: 3px;
+  }
+
+  & + .mapImage {
+    margin-left: -0.5rem;
+  }
+
+  &:hover::after {
+    content: attr(data-name);
+    display: block;
+    position: absolute;
+    // fix position when border is showed 
+    bottom: calc(var(--border-size) * -1);
+    left: calc(var(--border-size) * -1);
+    width: 80px;
+    color: #f2f2f2;
+    background: hsla(0, 0%, 0%, 0.8);
+
+    font-size: 0.85rem;
+    text-align: center;
+  }
 }
 
 .container {
@@ -14,9 +69,31 @@
   max-width: 600px;
 }
 
+.groupItems {  
+  margin-top: 1rem;
+}
+
+.itemsWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 75px);
+  grid-template-rows: repeat(auto-fill, 75px);
+  gap: 0.25rem;
+  
+  margin-top: 1rem;
+  font-family: $font-text;
+  width: 100%;
+  max-width: 600px;
+}
+
 .itemWrapper {
   display: flex;
   gap: 10px;
+  border: 1px solid $color-golden-o20;
+
+  &:hover {
+    cursor:pointer;
+    border-color: $color-golden;
+  }
 }
 
 .col_3 {

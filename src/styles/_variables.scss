@@ -1,5 +1,6 @@
 $color-golden: hsl(45, 38%, 69%);
 $color-golden-l15: lighten($color-golden, 15%);
+$color-golden-o20: rgba($color-golden, .20);
 
 $font-title: "Goldman", cursive;
 $font-text: 'Poppins', sans-serif;;

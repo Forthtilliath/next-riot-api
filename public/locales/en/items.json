@@ -1,5 +1,8 @@
 {
-    "title": "Items",
-    "search-label": "Search an item"
+  "title": "Items",
+  "search-label": "Search an item",
+  "maps": {
+    "11": "Summoner's Rift",
+    "12": "Howling Abyss"
   }
-  
+}

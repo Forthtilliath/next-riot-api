@@ -1,6 +1,9 @@
-import { filterItems, ItemFiltered, UnionFilterItems } from "@/pages/items";
-import { ChangeEvent, useState } from "react";
-import { filterArrayOfEntries } from "../methods/array";
+// import { filterItems, ItemFiltered, UnionFilterItems } from "@/pages/items";
+import { ChangeEvent, useState } from 'react';
+
+import { filterKeysOfItems } from '@/pages/items';
+
+import { filterArrayOfEntries } from '../methods/array';
 
 /**
  * Filtres les données à partir du searchTerm sur le tableau de clés passé en argument.
@@ -8,11 +11,11 @@ import { filterArrayOfEntries } from "../methods/array";
  * @param propsToCompare - Clés sur lesquels le searchTerm doit chercher
  * @returns Données filtrées à partir des clés choisies et du searchTerm
  */
-export function useSearchTerm<T extends ReturnType<typeof filterItems>>(
+export function useSearchTerm<T extends ReturnType<typeof filterKeysOfItems>>(
   data: T,
-  propsToCompare: Array<UnionFilterItems>
+  propsToCompare: Array<UnionFilterItems>,
 ) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   /**
    * Callback which change the searchTerm
@@ -27,14 +30,14 @@ export function useSearchTerm<T extends ReturnType<typeof filterItems>>(
     filterArrayOfEntries<ItemFiltered>(
       dataItem as [id: string, item: ItemFiltered],
       propsToCompare,
-      value
-    )
+      value,
+    ),
   );
 
   /**
    *Sets the value of the searchTerm to an empty string.
    */
-  const reset = () => setValue("");
+  const reset = () => setValue('');
 
   return [value, onChange, dataFiltered, reset] as const;
 }

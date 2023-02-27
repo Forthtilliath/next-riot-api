@@ -1,7 +1,6 @@
+import { DEFAULT_LOCALE_FULL, LANGUAGES } from '../constantes';
 import Axios from 'axios';
 import { setupCache } from 'axios-cache-interceptor';
-
-import { DEFAULT_LOCALE_FULL, LANGUAGES } from './utils/constantes';
 
 const BASE_URL_DDRAGON = 'https://ddragon.leagueoflegends.com';
 const BASE_URL_STATIC = 'https://static.developer.riotgames.com';
@@ -28,8 +27,9 @@ async function fetchDdragon<T>(route: string, id: string) {
     .get<T>(route, { id })
     .then((res) => res.data)
     .catch((err) => {
-      console.error(err);
-      return [] as T;
+      // console.error(err);
+      // return [] as T;
+      return null;
     });
 }
 
@@ -38,8 +38,9 @@ async function fetchStatic<T>(route: string, id: string) {
     .get<T>(route, { id })
     .then((res) => res.data)
     .catch((err) => {
-      console.error(err);
-      return [] as T;
+      // console.error(err);
+      // return [] as T;
+      return null;
     });
 }
 
@@ -60,7 +61,7 @@ export async function getMaps() {
 
 /** Retourne la dernière version disponible */
 export async function getLastVersion() {
-  return await getVersions().then((res) => res[0]);
+  return await getVersions().then((res) => res?.[0] || null);
 }
 
 /**
@@ -72,7 +73,8 @@ export async function getChampions() {
   return await fetchDdragon<{ data: Champion[] }>(
     `/cdn/${options.version}/data/${options.language}/champion.json`,
     'champions',
-  ).then((res) => res.data);
+    // ).then((res) => res.data);
+  ).then((res) => res?.data || []);
 }
 
 /**
@@ -87,9 +89,33 @@ export async function getItems(locale: string) {
     // `/cdn/${options.version}/data/${options.language}/item.json`,
     `${locale}-items`,
     // "items"
-  ).then((res) => res.data);
+    // ).then((res) => res.data);
+  ).then((res) => res?.data);
+  // ).then((res) => res?.data || []);
 }
 
 export function getItemUrlImage(filename: string) {
   return `${BASE_URL_DDRAGON}/cdn/${options.version}/img/item/${filename}`;
+}
+
+
+/**
+ * Retourne la liste des objets disponible. Les informations retournées
+ * dépendent de la version du jeu ainsi que de la langue
+ */
+export async function getItem(locale: string, id: string) {
+  const items = await getItems(locale);
+
+  if (items) {
+    console.log("item:",Object.keys(items))
+  }
+  // console.log(items);
+  // console.log({id});
+  // console.log(items?.['21']);
+
+  // if (!items || !items[id]) {
+  //   return null;
+  // }
+  
+  return items?.[id];
 }

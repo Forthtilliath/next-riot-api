@@ -3,5 +3,9 @@
     "home": "Home",
     "champions": "Champions",
     "items": "Items"
+  },
+  "errors": {
+    "fetch": "Error while fetching data",
+    "fetch-items": "Error while fetching items"
   }
 }
