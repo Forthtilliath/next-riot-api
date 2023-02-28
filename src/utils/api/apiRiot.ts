@@ -1,6 +1,7 @@
-import { DEFAULT_LOCALE_FULL, LANGUAGES } from '../constantes';
 import Axios from 'axios';
 import { setupCache } from 'axios-cache-interceptor';
+
+import { DEFAULT_LOCALE_FULL, LANGUAGES } from '../constantes';
 
 const BASE_URL_DDRAGON = 'https://ddragon.leagueoflegends.com';
 const BASE_URL_STATIC = 'https://static.developer.riotgames.com';
@@ -94,28 +95,50 @@ export async function getItems(locale: string) {
   // ).then((res) => res?.data || []);
 }
 
-export function getItemUrlImage(filename: string) {
-  return `${BASE_URL_DDRAGON}/cdn/${options.version}/img/item/${filename}`;
-}
-
-
 /**
  * Retourne la liste des objets disponible. Les informations retournées
  * dépendent de la version du jeu ainsi que de la langue
  */
-export async function getItem(locale: string, id: string) {
+export async function getItem(
+  locale: string,
+  id: string,
+  parent = true,
+): Promise<ItemWithId | ItemDetails | null> {
   const items = await getItems(locale);
 
-  if (items) {
-    console.log("item:",Object.keys(items))
-  }
-  // console.log(items);
-  // console.log({id});
-  // console.log(items?.['21']);
+  // Si pas d'objets ou objet non trouvé
+  if (!items || !items?.[id]) return null;
 
-  // if (!items || !items[id]) {
-  //   return null;
-  // }
-  
-  return items?.[id];
+  // TODO: Récupérer les objets from et into
+  const item = items[id];
+
+  // On évite de récupérer les from de from de from. On veut juste ceux de l'item affiché
+  if (!parent) return {id, ...item};
+
+  const from: Awaited<Array<ItemWithId>> = await Promise.all(
+    item?.from?.map(async (itemId) => ({
+      id: itemId,
+      ...((await getItem(locale, itemId, false)) as Item),
+    })) ?? [],
+  );
+  const into: Awaited<Array<ItemWithId>> = await Promise.all(
+    item?.into?.map(async (itemId) => ({
+      id: itemId,
+      ...((await getItem(locale, itemId, false)) as Item),
+    })) ?? [],
+  );
+
+  return {
+    id,
+    ...item,
+    from,
+    into,
+  };
+}
+
+async function filter<T>(arr: Array<T>, callback: Function) {
+  const fail = Symbol();
+  return (
+    await Promise.all(arr.map(async (item) => ((await callback(item)) ? item : fail)))
+  ).filter((i) => i !== fail);
 }

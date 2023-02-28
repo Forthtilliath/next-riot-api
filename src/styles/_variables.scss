@@ -1,6 +1,11 @@
 $color-golden: hsl(45, 38%, 69%);
-$color-golden-l15: lighten($color-golden, 15%);
+$color-golden-l15: hsl(45, 38%, 84%);
 $color-golden-o20: rgba($color-golden, .20);
+
+$color-white: hsl(0, 0%, 95%);
+$color-white-d25: hsl(0, 0%, 70%);
+
+$color-purple: purple;
 
 $font-title: "Goldman", cursive;
 $font-text: 'Poppins', sans-serif;;

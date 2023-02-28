@@ -1,0 +1,118 @@
+@import './variables';
+
+.container {
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.cost,
+.fusionCost {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  font-weight: 600;
+  font-family: $font-text;
+}
+
+.rowLeft {
+  img {
+    border-radius: 0.5rem;
+  }
+  .cost {
+    justify-content: center;
+
+    color: $color-golden;
+    font-size: 1.2rem;
+  }
+}
+
+.description {
+  color: $color-white-d25;
+  font-family: $font-text;
+
+  maintext {
+    display: block;
+    margin-left: 1rem;
+  }
+
+  attention {
+    color: $color-white;
+    font-weight: 600;
+  }
+
+  ornnBonus {
+    color: lighten($color-white, 5%);
+    font-weight: 700;
+  }
+
+  li {
+    margin-top: 1rem;
+  }
+
+  status {
+    color: $color-purple;
+    font-weight: 600;
+  }
+
+  passive,
+  active,
+  rarityMythic {
+    color: $color-golden;
+    font-weight: 600;
+  }
+
+  rarityLegendary {
+    color: $color-golden;
+  }
+}
+
+.section {
+  margin-top: 2rem;
+}
+
+.fusionCost {
+  font-size: 0.9rem;
+  // Annule la margin des subTitles
+  margin-top: -1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.itemsWrapper {
+  display: grid;
+  gap: 1rem;
+  grid-template-rows: repeat(auto-fill, 75px);
+  grid-template-columns: repeat(auto-fit, 300px);
+
+  .link {
+    width: 100%;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    overflow: hidden;
+
+    display: flex;
+    gap: 0.5rem;
+
+    &:hover {
+      cursor: pointer;
+      border-color: $color-golden;
+    }
+  }
+
+  .link_name {
+    font-family: $font-text;
+    font-size: 1rem;
+    color: $color-golden;
+    margin-bottom: 0.4rem;
+  }
+
+  .cost,
+  .upgrade {
+    font-family: $font-text;
+    font-size: 0.8rem;
+  }
+}

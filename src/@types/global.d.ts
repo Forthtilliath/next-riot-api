@@ -6,6 +6,39 @@ type TSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 
 type Data = Record<string, unknown>;
 
+/**
+ * Merge multiple types as one
+ * @param T Type objects
+ *
+ * @example
+ * type Product = {
+ *  id: string;
+ *  name: string;
+ *  description: string;
+ *  price: number;
+ * }
+ * type Cart = {
+ *   quantity: number;
+ * }
+ *
+ * type T = Merge<Product | Cart>
+ * // Equals to
+ * type T = {
+ *  id: string;
+ *  name: string;
+ *  description: string;
+ *  price: number;
+ *  quantity: number;
+ * }
+ */
+type Merge<U extends Record<string, unknown>> = {
+  [K in U extends unknown ? keyof U : never]: U extends unknown
+    ? K extends keyof U
+      ? U[K]
+      : never
+    : never;
+};
+
 type Champion = {
   version: string;
   id: string;
@@ -53,41 +86,6 @@ type Champion = {
     attackspeed: number;
   };
 };
-
-type Items = Record<string, Item>;
-type Item = {
-  name: string;
-  description: string;
-  colloq: string;
-  plaintext: string;
-  from: string[];
-  into: string[];
-  image: {
-    full: string;
-    sprite: string;
-    group: string;
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-  };
-  gold: {
-    base: number;
-    purchasable: boolean;
-    total: number;
-    sell: number;
-  };
-  tags: string[];
-  maps: {
-    "11": boolean;
-    "12": boolean;
-    "21": boolean;
-    "22": boolean;
-  };
-  stats: Record<string, number>;
-  depth: number;
-};
-
 
 type MapLol = {
   mapId: number;

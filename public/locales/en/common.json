@@ -6,6 +6,7 @@
   },
   "errors": {
     "fetch": "Error while fetching data",
-    "fetch-items": "Error while fetching items"
+    "fetch-items": "Error while fetching items",
+    "item-not-found": "Item not found"
   }
 }

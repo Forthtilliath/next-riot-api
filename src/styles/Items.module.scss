@@ -23,6 +23,8 @@
 
   background-position: center;
   background-size: cover;
+  background-image: var(--url);
+
   border: var(--border-size) solid $color-golden;
 
   // cache l'id de la map

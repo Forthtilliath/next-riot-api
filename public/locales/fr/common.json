@@ -6,6 +6,7 @@
   },
   "errors": {
     "fetch": "Erreur lors de la récupération des données",
-    "fetch-items": "Erreur lors de la récupération des objets"
+    "fetch-items": "Erreur lors de la récupération des objets",
+    "item-not-found": "Objet non trouvé"
   }
 }

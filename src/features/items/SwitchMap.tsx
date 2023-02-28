@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
 
-import { MAPS } from '@/utils/constantes';
+import { CSS_URL, MAPS } from '@/utils/constantes';
 
 import RadioGroup from '../RadioGroup';
 
@@ -17,12 +17,14 @@ export default function SwitchMap({ setMap }: Props) {
   return (
     <RadioGroup callback={setMap}>
       <span
-        className={classNames(styles.mapImage, styles.mapSummonerRift)}
+        className={styles.mapImage}
+        style={CSS_URL.SUMMONER_RIFT}
         data-name={t('items:maps:' + MAPS.SUMMONER_RIFT)}>
         {MAPS.SUMMONER_RIFT}
       </span>
       <span
-        className={classNames(styles.mapImage, styles.mapHowlingAbyss)}
+        className={styles.mapImage}
+        style={CSS_URL.HOWLING_ABYSS}
         data-name={t('items:maps:' + MAPS.HOWLING_ABYSS)}>
         {MAPS.HOWLING_ABYSS}
       </span>

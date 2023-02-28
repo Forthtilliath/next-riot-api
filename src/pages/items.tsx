@@ -6,7 +6,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useState } from 'react';
 
 import GroupItems from '@/features/items/GroupItems';
-import Item from '@/features/items/Item';
 import SwitchMap from '@/features/items/SwitchMap';
 import Searchbar from '@/features/Searchbar';
 
@@ -75,7 +74,6 @@ export default function Items({ items, error }: Props) {
       epic: [],
       legendary: [],
       mythic: [],
-      // } as Record<'basic' | 'epic' | 'legendary' | 'mythic', [string, ItemFiltered][]>,
     } as TSortedItems,
   );
   // console.log(sortedItems);
@@ -98,7 +96,6 @@ export default function Items({ items, error }: Props) {
             </div>
 
             <div className={styles.container}>
-              {/* <GroupItems name="Starter & Basic" items={sortedItems.basic} /> */}
               <GroupItems name="Starter" items={sortedItems.starter} />
               <GroupItems name="Basic" items={sortedItems.basic} />
               <GroupItems name="Epic" items={sortedItems.epic} />
@@ -123,7 +120,6 @@ export const keysToKeep = [
   'into',
 ] as const;
 
-// TODO Locale = langue dispo
 export async function getServerSideProps({ locale = DEFAULT_LOCALE }: GetServerSidePropsContext) {
   const items = await getItems(locale);
 
@@ -143,7 +139,6 @@ export async function getServerSideProps({ locale = DEFAULT_LOCALE }: GetServerS
     // Objets récupérés
     Object.assign(props, {
       items: filterKeysOfItems(items),
-      // items,
     });
   }
 
