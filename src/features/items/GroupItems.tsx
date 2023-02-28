@@ -13,6 +13,8 @@ type Props = {
 export default function GroupItems({ name, items }: Props) {
   if (items.length === 0) return null;
 
+  items.sort(([,itemA],[,itemB]) => itemA.gold.total - itemB.gold.total)
+
   return (
     <div className={styles.groupItems}>
       <h3>{name}</h3>

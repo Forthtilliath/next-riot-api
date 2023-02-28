@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react';
 
 import { filterKeysOfItems } from '@/pages/items';
 
-import { filterArrayOfEntries } from '../methods/array';
+import { filterEntry } from '../methods/array';
 
 /**
  * Filtres les données à partir du searchTerm sur le tableau de clés passé en argument.
@@ -27,11 +27,7 @@ export function useSearchTerm<T extends ReturnType<typeof filterKeysOfItems>>(
 
   /** Data filtered based on the search term. */
   const dataFiltered = Object.entries(data).filter((dataItem) =>
-    filterArrayOfEntries<ItemFiltered>(
-      dataItem as [id: string, item: ItemFiltered],
-      propsToCompare,
-      value,
-    ),
+    filterEntry(dataItem, propsToCompare, value),
   );
 
   /**

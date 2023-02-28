@@ -13,10 +13,10 @@ import Searchbar from '@/features/Searchbar';
 import { getItems } from '@/utils/api/apiRiot';
 import { DEFAULT_LOCALE, MAPS } from '@/utils/constantes';
 import { useSearchTerm } from '@/utils/hooks';
+import { filterKeys } from '@/utils/methods/object';
 
 import styles from '@/styles/Items.module.scss';
 import stylesPage from '@/styles/Page.module.scss';
-import { filterKeys } from '@/utils/methods/object';
 
 type Props = {
   items: ReturnType<typeof filterKeysOfItems>;
@@ -33,13 +33,12 @@ export default function Items({ items, error }: Props) {
   const purchasableItems = Object.values(itemsFiltered).filter(
     ([, item]) => item.gold.purchasable && item.gold.base > 0 && item.maps[map],
   );
-  type a = typeof itemsFiltered[number][1]
+  type a = (typeof itemsFiltered)[number][1];
 
   const sortedItems = purchasableItems.reduce(
     (acc, [key, item]) => {
       switch (item.depth) {
-        // depth = 3 avec into => mythic
-        // Sinon => legendary
+        // MYTHIC / LEGENDARY
         case 3: {
           if (item.into) {
             acc.mythic.push([key, item]);
@@ -48,15 +47,20 @@ export default function Items({ items, error }: Props) {
           }
           break;
         }
-        // depth = 2 => epic
+        // LEGENDARY / EPIC
         case 2: {
-          acc.epic.push([key, item]);
+          // La rabadon et l'id ont un depth de 2 alors qu'il devrait être de 3
+          // Pour fixer cela, je tri aussi sur l'into pour les depth 2
+          if (item.into) {
+            acc.epic.push([key, item]);
+          } else {
+            acc.legendary.push([key, item]);
+          }
           break;
         }
-        // Si tags inclus : lane / jungle => starter
-        // Sinon => basic
+        // STARTER / BASIC
         default: {
-          if ((item.tags && item.tags.includes('Lane')) || item.tags.includes('Jungle')) {
+          if (item.tags && (item.tags.includes('Lane') || item.tags.includes('Jungle'))) {
             acc.starter.push([key, item]);
           } else {
             acc.basic.push([key, item]);
@@ -92,11 +96,7 @@ export default function Items({ items, error }: Props) {
               <SwitchMap setMap={setMap} />
               <Searchbar searchTerm={search} onChange={onChange} reset={reset} />
             </div>
-            {/* <div className={styles.container}>
-              {purchasableItems.map(([key, item]) => (
-                <Item key={key} {...item} />
-              ))}
-            </div> */}
+
             <div className={styles.container}>
               {/* <GroupItems name="Starter & Basic" items={sortedItems.basic} /> */}
               <GroupItems name="Starter" items={sortedItems.starter} />
@@ -150,7 +150,6 @@ export async function getServerSideProps({ locale = DEFAULT_LOCALE }: GetServerS
   return { props };
 }
 
-
 /**
  * Filtre les clés des objets afin de ne conserver que celles que l'on a besoin.
  * @param {Items} items - Objets ausquel on veut filtrer les clés
@@ -158,18 +157,7 @@ export async function getServerSideProps({ locale = DEFAULT_LOCALE }: GetServerS
  */
 export function filterKeysOfItems(items: Items) {
   const aItemsFiltered = Object.entries(items).map(([id, item]) => {
-    // return Object.fromEntries(filterKeys.map((k) => [k, item[k]])) as ItemFiltered;
-    // filter => car quelques clés sont optionnelles
-    return [
-      id,
-      filterKeys(item, keysToKeep)
-    ] as const;
-    // return [
-    //   id,
-    //   Object.fromEntries(
-    //     keysToKeep.filter((k) => item[k]).map((k) => [k, item[k]]),
-    //   ) as ItemFiltered,
-    // ] as const;
+    return [id, filterKeys(item, keysToKeep)] as const;
   });
 
   return Object.fromEntries(aItemsFiltered);

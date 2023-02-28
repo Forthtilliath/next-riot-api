@@ -28,6 +28,7 @@
   // cache l'id de la map
   color: transparent;
   user-select: none;
+  cursor: pointer;
 
   &.mapSummonerRift {
     background-image: url('https://ddragon.leagueoflegends.com/cdn/13.4.1/img/map/map11.png');

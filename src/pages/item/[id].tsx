@@ -1,23 +1,35 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { GetServerSidePropsContext } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React from 'react';
 
-import { getItem, getItems } from '@/utils/api/apiRiot';
+import { getItem, getItems, getItemUrlImage } from '@/utils/api/apiRiot';
 import { DEFAULT_LOCALE } from '@/utils/constantes';
 
 type Props = {
   item: Item;
 };
 
-export default function Item({ item }: Props) {
+export default function Item({ item: { name, image, description, plaintext, ...o } }: Props) {
   const router = useRouter();
   const slug = (router.query.id as string[]) || [];
 
-  console.log(item);
+  console.log(o);
 
-  return <div>Item</div>;
+  return (
+    <div>
+      <h1>{name}</h1>
+      <Image alt="item" src={getItemUrlImage(image.full)} width={150} height={150} />
+      <p>{description}</p>
+      <p>{plaintext}</p>
+      {/* from & into */}
+      {/* maps */}
+      {/* tags */}
+      {/* gold : base & total */}
+    </div>
+  );
 }
 
 export async function getServerSideProps({
@@ -38,12 +50,8 @@ export async function getServerSideProps({
     return { props };
   }
 
-  console.log('params.id', params.id);
-
   if (typeof params.id === 'string') {
     const item = await getItem(locale, params.id);
-
-    console.log(item);
 
     if (item === undefined) {
       Object.assign(props, {
@@ -54,7 +62,7 @@ export async function getServerSideProps({
         item,
       });
     }
-
-    return { props };
   }
+  
+  return { props };
 }
