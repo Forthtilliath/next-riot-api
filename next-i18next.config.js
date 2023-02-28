@@ -1,10 +1,8 @@
-const { DEFAULT_LOCALE, LOCALES } = require('@/utils/constantes');
-
 module.exports = {
   debug: process.env.NODE_ENV === 'development',
   i18n: {
-    defaultLocale: DEFAULT_LOCALE,
-    locales: LOCALES,
+    defaultLocale: 'fr',
+    locales: ['fr', 'en'],
   },
   /** To avoid issues when deploying to some paas (vercel...) */
   localePath: typeof window === 'undefined' ? require('path').resolve('./public/locales') : '/locales',
