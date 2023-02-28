@@ -4,8 +4,10 @@ $color-golden-o20: rgba($color-golden, .20);
 
 $color-white: hsl(0, 0%, 95%);
 $color-white-d25: hsl(0, 0%, 70%);
+$color-white-d45: hsl(0, 0%, 50%);
 
-$color-purple: purple;
+$color-purple: hsl(300deg 100% 40%);
+$color-purple-d15: hsl(300deg 100% 25%);
 
 $font-title: "Goldman", cursive;
 $font-text: 'Poppins', sans-serif;;

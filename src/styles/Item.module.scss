@@ -69,6 +69,14 @@
   rarityLegendary {
     color: $color-golden;
   }
+
+  rules {
+    // color: darken($color-white, 45%);
+    color: $color-white-d45;
+    status {
+      color: $color-purple-d15;
+    }
+  }
 }
 
 .section {
