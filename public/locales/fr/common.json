@@ -11,5 +11,9 @@
     "fetch": "Erreur lors de la récupération des données",
     "fetch-items": "Erreur lors de la récupération des objets",
     "item-not-found": "Objet non trouvé"
+  },
+  "footer": {
+    "coded-by": "Codé par Forth",
+    "contest": "Concours #4 : Utilisation d'une API REST dans une création web"
   }
 }

@@ -14,7 +14,6 @@ import { useSearchTerm } from '@/utils/hooks';
 import { filterKeys } from '@/utils/methods/object';
 
 import styles from '@/styles/Items.module.scss';
-import stylesPage from '@/styles/Page.module.scss';
 
 type Props = {
   items: ReturnType<typeof filterKeysOfItems>;
@@ -88,11 +87,11 @@ export default function Items({ items, error }: Props) {
           </div>
 
           <div className={styles.container}>
-            <GroupItems name="Starter" items={sortedItems.starter} />
-            <GroupItems name="Basic" items={sortedItems.basic} />
-            <GroupItems name="Epic" items={sortedItems.epic} />
-            <GroupItems name="Legendary" items={sortedItems.legendary} />
-            <GroupItems name="Mythic" items={sortedItems.mythic} />
+            <GroupItems name={t('items:headers:starter')} items={sortedItems.starter} />
+            <GroupItems name={t('items:headers:basic')} items={sortedItems.basic} />
+            <GroupItems name={t('items:headers:epic')} items={sortedItems.epic} />
+            <GroupItems name={t('items:headers:legendary')} items={sortedItems.legendary} />
+            <GroupItems name={t('items:headers:mythic')} items={sortedItems.mythic} />
           </div>
         </>
       )}

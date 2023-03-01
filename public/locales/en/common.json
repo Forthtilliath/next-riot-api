@@ -11,5 +11,9 @@
     "fetch": "Error while fetching data",
     "fetch-items": "Error while fetching items",
     "item-not-found": "Item not found"
+  },
+  "footer": {
+    "coded-by": "Coded by Forth",
+    "contest": "Contest #4: Using a REST API in a web creation"
   }
 }

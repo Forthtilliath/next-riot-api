@@ -4,5 +4,16 @@
   "maps": {
     "11": "Faille de l'invocateur",
     "12": "Abîme hurlant"
-  }
+  },
+  "headers": {
+    "starter": "De départ",
+    "basic": "Basique",
+    "epic": "Épique",
+    "legendary": "Légendaire",
+    "mythic": "Mythique"
+  },
+  "upgrade-ornn": "Amélioration de Ornn",
+  "from": "À partir de",
+  "into": "Vers",
+  "merge-cost": "Coût de fusion"
 }

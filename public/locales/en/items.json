@@ -4,5 +4,16 @@
   "maps": {
     "11": "Summoner's Rift",
     "12": "Howling Abyss"
-  }
+  },
+  "headers": {
+    "starter": "Starter",
+    "basic": "Basic",
+    "epic": "Epic",
+    "legendary": "Legendary",
+    "mythic": "Mythic"
+  },
+  "upgrade-ornn": "Master Craftsman item",
+  "from": "From",
+  "into": "Into",
+  "merge-cost": "Merge cost"
 }

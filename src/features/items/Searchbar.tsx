@@ -12,17 +12,11 @@ type Props = {
 
 export default function Searchbar({ searchTerm, reset, onChange }: Props) {
   const { t } = useTranslation('items');
-  // const label = `${t("search-label")}:`;
-  // console.log({ label });
-  // const onSubmit = (e: FormEvent<HTMLFormElement>) => {};
 
   return (
-    // <form onSubmit={onSubmit}>
-    <form>
+    <form className={styles.searchBar}>
       <label className={styles.inputLabel} htmlFor="input-query">
-        {/* {label} */}
         {`${t('search-label')} :`}
-        {/* Rechercher un objet : */}
       </label>
       <div className={styles.inputWrapper}>
         <input

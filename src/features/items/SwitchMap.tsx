@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
 
 import { CSS_URL, MAPS } from '@/utils/constantes';

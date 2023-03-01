@@ -51,12 +51,14 @@ export default function Item({ item, error }: Props) {
 
       {from.length > 0 && (
         <section className={styles.section}>
-          <h2>Items from</h2>
-          <div className={styles.fusionCost}>
-            <span>Coût de fusion : </span>
-            <Image src={ASSETS + 'Gold.webp'} alt="Gold" width={16} height={12} />
-            <span>{gold.base}</span>
-          </div>
+          <h2>{t('items:from')}</h2>
+          {gold.base > 0 && (
+            <div className={styles.fusionCost}>
+              <span>{t('items:merge-cost')} : </span>
+              <Image src={ASSETS + 'Gold.webp'} alt="Gold" width={16} height={12} />
+              <span>{gold.base}</span>
+            </div>
+          )}
           <div className={styles.itemsWrapper}>
             {from.map((item, index) => (
               <Link key={`${item.id}-${index}`} href={`/item/${item.id}`} className={styles.link}>
@@ -76,7 +78,7 @@ export default function Item({ item, error }: Props) {
 
       {into.length > 0 && (
         <section className={styles.section}>
-          <h2>Items into</h2>
+          <h2>{t('items:into')}</h2>
           <div className={styles.itemsWrapper}>
             {into.map((item, index) => (
               <Link key={`${item.id}-${index}`} href={`/item/${item.id}`} className={styles.link}>
@@ -85,7 +87,7 @@ export default function Item({ item, error }: Props) {
                   <header className={styles.link_name}>{item.name}</header>
 
                   {depth === 3 ? (
-                    <p className={styles.upgrade}>Amélioration de Ornn</p>
+                    <p className={styles.upgrade}>{t('items:upgrade-ornn')}</p>
                   ) : (
                     <div className={styles.cost}>
                       <Image src={ASSETS + 'Gold.webp'} alt="Gold" width={16} height={12} />

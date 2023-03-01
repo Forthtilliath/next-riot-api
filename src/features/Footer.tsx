@@ -1,11 +1,15 @@
-import React from 'react';
+import { useTranslation } from 'next-i18next';
 
 import styles from '@/styles/Layout.module.scss';
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.footer}>
-      <p>Codé par Forth - Concours #4 : Utilisation d&apos;une API REST dans une création web</p>
+      <p>
+        &copy; {t('common:footer:coded-by')} - {t('common:footer:contest')}
+      </p>
     </div>
   );
 }

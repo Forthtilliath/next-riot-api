@@ -6,10 +6,14 @@
 }
 
 .filters {
-  // display: flex;
   display: grid;
+  justify-items: center;
   grid-template-areas: 'map1 map2 search';
   gap: 1rem;
+
+  @media (width <= 850px) {
+    grid-template-areas: 'map1 map2' 'search search';
+  }
 }
 
 .mapsWrapper {
@@ -34,22 +38,18 @@
   color: transparent;
   user-select: none;
 
-  // &.mapSummonerRift {
-  //   background-image: url('https://ddragon.leagueoflegends.com/cdn/13.4.1/img/map/map11.png');
-  // }
-  // &.mapHowlingAbyss {
-  //   background-image: url('https://ddragon.leagueoflegends.com/cdn/13.4.1/img/map/map12.png');
-  // }
+  &:nth-child(1) {
+    grid-area: map1;
+  }
+  &:nth-child(2) {
+    grid-area: map2;
+  }
 
   &[active='true'] {
     --border-size: 3px;
   }
 
-  & + .mapImage {
-    margin-left: -0.5rem;
-  }
-
-  &:hover::after {
+  &::after {
     content: attr(data-name);
     display: block;
     position: absolute;
@@ -59,9 +59,25 @@
     width: 80px;
     color: #f2f2f2;
     background: hsla(0, 0%, 0%, 0.8);
+    opacity: 0;
+    transition: opacity 0.3s;
 
     font-size: 0.85rem;
     text-align: center;
+  }
+  &:hover::after {
+    opacity: 1;
+  }
+
+
+  @media (width <= 850px) {
+    width: 100px;
+    height: 100px;
+
+    &::after {
+      width: 100px;
+    font-size: 1rem;
+    }
   }
 }
 
@@ -71,7 +87,6 @@
   margin-top: 2rem;
   font-family: $font-text;
   width: 100%;
-  // max-width: 1200px;
 }
 
 .groupItems {
@@ -89,7 +104,6 @@
   margin-top: 1rem;
   font-family: $font-text;
   width: 100%;
-  // max-width: 1200px;
 }
 
 .itemWrapper {
@@ -107,11 +121,14 @@
   flex: 1;
 }
 
+.searchBar {
+  grid-area: search;
+}
+
 .inputLabel {
   font-size: 1rem;
   letter-spacing: 1.2px;
   font-family: $font-text;
-  // text-transform: uppercase;
 }
 
 .inputWrapper {
