@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 import GroupItems from '@/features/items/GroupItems';
 import SwitchMap from '@/features/items/SwitchMap';
-import Searchbar from '@/features/Searchbar';
+import Searchbar from '@/features/items/Searchbar';
 
 import { getItems } from '@/utils/api/apiRiot';
 import { APP_NAME, DEFAULT_LOCALE, MAPS } from '@/utils/constantes';
