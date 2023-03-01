@@ -1,0 +1,25 @@
+@import './variables';
+
+.main {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  max-width: 1200px;
+  padding-inline: min(5dvw, 3rem);
+  margin-inline: auto;
+}
+
+.footer {
+  margin-inline: min(3rem, 5dvw);
+  text-align: center;
+  font-family: $font-text;
+  font-size: 0.9rem;
+
+  p {
+    padding-block: 1rem;
+  }
+}

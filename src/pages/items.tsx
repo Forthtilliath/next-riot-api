@@ -1,16 +1,15 @@
-import Head from 'next/head';
-
 import { GetServerSidePropsContext } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useState } from 'react';
 
 import GroupItems from '@/features/items/GroupItems';
-import SwitchMap from '@/features/items/SwitchMap';
 import Searchbar from '@/features/items/Searchbar';
+import SwitchMap from '@/features/items/SwitchMap';
+import MainLayout from '@/features/layout/mainLayout';
 
 import { getItems } from '@/utils/api/apiRiot';
-import { APP_NAME, DEFAULT_LOCALE, MAPS } from '@/utils/constantes';
+import { DEFAULT_LOCALE, MAPS } from '@/utils/constantes';
 import { useSearchTerm } from '@/utils/hooks';
 import { filterKeys } from '@/utils/methods/object';
 
@@ -77,32 +76,27 @@ export default function Items({ items, error }: Props) {
   );
 
   return (
-    <>
-      <Head>
-        <title>{`${APP_NAME} - ${t('items:title')}`}</title>
-      </Head>
-      <main className={stylesPage.main}>
-        <h1 className={stylesPage.title}>{t('items:title')}</h1>
-        {error.hasError ? (
-          <h2>{t(error.key)}</h2>
-        ) : (
-          <>
-            <div className={styles.filters}>
-              <SwitchMap setMap={setMap} />
-              <Searchbar searchTerm={search} onChange={onChange} reset={reset} />
-            </div>
+    <MainLayout title={t('items:title')}>
+      <h1>{t('items:title')}</h1>
+      {error.hasError ? (
+        <h2>{t(error.key)}</h2>
+      ) : (
+        <>
+          <div className={styles.filters}>
+            <SwitchMap setMap={setMap} />
+            <Searchbar searchTerm={search} onChange={onChange} reset={reset} />
+          </div>
 
-            <div className={styles.container}>
-              <GroupItems name="Starter" items={sortedItems.starter} />
-              <GroupItems name="Basic" items={sortedItems.basic} />
-              <GroupItems name="Epic" items={sortedItems.epic} />
-              <GroupItems name="Legendary" items={sortedItems.legendary} />
-              <GroupItems name="Mythic" items={sortedItems.mythic} />
-            </div>
-          </>
-        )}
-      </main>
-    </>
+          <div className={styles.container}>
+            <GroupItems name="Starter" items={sortedItems.starter} />
+            <GroupItems name="Basic" items={sortedItems.basic} />
+            <GroupItems name="Epic" items={sortedItems.epic} />
+            <GroupItems name="Legendary" items={sortedItems.legendary} />
+            <GroupItems name="Mythic" items={sortedItems.mythic} />
+          </div>
+        </>
+      )}
+    </MainLayout>
   );
 }
 
@@ -116,8 +110,6 @@ export const keysToKeep = [
   'tags',
   'into',
 ] as const;
-
-
 
 export async function getServerSideProps({ locale = DEFAULT_LOCALE }: GetServerSidePropsContext) {
   const items = await getItems(locale);

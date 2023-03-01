@@ -1,14 +1,13 @@
-import Head from 'next/head';
-
 import { GetServerSidePropsContext } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
+import MainLayout from '@/features/layout/mainLayout';
+
 import { getChampions } from '@/utils/api/apiRiot';
-import { APP_NAME, DEFAULT_LOCALE } from '@/utils/constantes';
+import { DEFAULT_LOCALE } from '@/utils/constantes';
 
 import styles from '@/styles/Champions.module.scss';
-import stylesPage from '@/styles/Page.module.scss';
 
 type Props = {
   champions: Awaited<ReturnType<typeof getChampions>>;
@@ -20,23 +19,18 @@ export default function Champions({ champions, error }: Props) {
   console.log(champions);
 
   return (
-    <>
-      <Head>
-        <title>{`${APP_NAME} - ${t('champions:title')}`}</title>
-      </Head>
-      <main className={stylesPage.main}>
-        <h1>CHAMPIONS</h1>
-        {error.hasError ? (
-          <h2>{t(error.key)}</h2>
-        ) : (
-          <ul>
-            {Object.values(champions).map((champion) => (
-              <li key={champion.id}>{champion.name}</li>
-            ))}
-          </ul>
-        )}
-      </main>
-    </>
+    <MainLayout title={t('champions:title')}>
+      <h1>{t('champions:title')}</h1>
+      {error.hasError ? (
+        <h2>{t(error.key)}</h2>
+      ) : (
+        <ul>
+          {Object.values(champions).map((champion) => (
+            <li key={champion.id}>{champion.name}</li>
+          ))}
+        </ul>
+      )}
+    </MainLayout>
   );
 }
 

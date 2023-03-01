@@ -130,11 +130,12 @@
   }
 
   .navLink {
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-align: center;
+    color: $color-golden;
 
-    &.active {
-      color: $color-golden;
+    &:hover, &.active {
+      color: $color-golden-l15;
     }
   }
 }
@@ -146,4 +147,9 @@
   display: flex;
   justify-content: center;
   gap: 0.5rem;
+
+  img {
+    width: 48px;
+    height: 48px;
+  }
 }

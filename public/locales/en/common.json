@@ -1,4 +1,7 @@
 {
+  "layout": {
+    "description": "Wiwotoff is a database for getting information about League of Legends game items and champions."
+  },
   "navbar": {
     "home": "Home",
     "champions": "Champions",

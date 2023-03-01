@@ -27,12 +27,12 @@ export function ButtonLanguage({ language }: ButtonProps) {
   const { i18n } = useTranslation();
 
   const active = i18n.language === language.locale;
-  const { pathname } = useRouter();
+  const { asPath } = useRouter();
 
   return (
     <Link
       className={classNames(styles.btn, { [styles.active]: active })}
-      href={pathname}
+      href={asPath}
       locale={language.locale}>
       <Image src={language.flag} alt={language.locale} width={64} height={64} />
     </Link>

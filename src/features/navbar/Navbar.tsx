@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { MouseEvent, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import Burger from './Burger';
 import Menu from './Menu';
@@ -23,7 +23,7 @@ export default function Navbar() {
       <div className={styles.logo}>
         <Image src={'/assets/LoL_icon.svg'} alt="logo" width={48} height={48} />
         <p>
-          When it's Worth,
+          When it&apos;s Worth,
           <br />
           Thanks to Forth
         </p>
@@ -33,6 +33,7 @@ export default function Navbar() {
 
       <Burger active={open} toggle={() => setOpen((o) => !o)} />
 
+      {/* Affichage tablette */}
       {open && (
         <div className={styles.overlay} onClick={handleClickOverlay} ref={overlayRef}>
           <div className={styles.mobile_menuWrapper}>

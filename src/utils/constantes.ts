@@ -37,6 +37,6 @@ export const MAPS = {
 } as const;
 
 export const CSS_URL = {
-  SUMMONER_RIFT: { '--url': `url('${PATH.MAP}/map11.png')` } as CSSProperties,
-  HOWLING_ABYSS: { '--url': `url('${PATH.MAP}/map12.png')` } as CSSProperties,
+  SUMMONER_RIFT: { '--url': `url('${PATH.MAP}map11.png')` } as CSSProperties,
+  HOWLING_ABYSS: { '--url': `url('${PATH.MAP}map12.png')` } as CSSProperties,
 };

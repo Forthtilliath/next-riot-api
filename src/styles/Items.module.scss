@@ -6,7 +6,9 @@
 }
 
 .filters {
-  display: flex;
+  // display: flex;
+  display: grid;
+  grid-template-areas: 'map1 map2 search';
   gap: 1rem;
 }
 
@@ -15,29 +17,29 @@
 }
 
 .mapImage {
-  --border-size: 0px;
   border-radius: 0.5rem;
   width: 80px;
   height: 80px;
   position: relative;
+  cursor: pointer;
 
   background-position: center;
   background-size: cover;
   background-image: var(--url);
 
+  --border-size: 0px;
   border: var(--border-size) solid $color-golden;
 
   // cache l'id de la map
   color: transparent;
   user-select: none;
-  cursor: pointer;
 
-  &.mapSummonerRift {
-    background-image: url('https://ddragon.leagueoflegends.com/cdn/13.4.1/img/map/map11.png');
-  }
-  &.mapHowlingAbyss {
-    background-image: url('https://ddragon.leagueoflegends.com/cdn/13.4.1/img/map/map12.png');
-  }
+  // &.mapSummonerRift {
+  //   background-image: url('https://ddragon.leagueoflegends.com/cdn/13.4.1/img/map/map11.png');
+  // }
+  // &.mapHowlingAbyss {
+  //   background-image: url('https://ddragon.leagueoflegends.com/cdn/13.4.1/img/map/map12.png');
+  // }
 
   &[active='true'] {
     --border-size: 3px;
@@ -51,7 +53,7 @@
     content: attr(data-name);
     display: block;
     position: absolute;
-    // fix position when border is showed 
+    // fix position when border is showed
     bottom: calc(var(--border-size) * -1);
     left: calc(var(--border-size) * -1);
     width: 80px;
@@ -69,23 +71,25 @@
   margin-top: 2rem;
   font-family: $font-text;
   width: 100%;
-  max-width: 600px;
+  // max-width: 1200px;
 }
 
-.groupItems {  
+.groupItems {
   margin-top: 1rem;
+  width: 100%;
 }
 
 .itemsWrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, 75px);
   grid-template-rows: repeat(auto-fill, 75px);
+  justify-content: space-between;
   gap: 0.25rem;
-  
+
   margin-top: 1rem;
   font-family: $font-text;
   width: 100%;
-  max-width: 600px;
+  // max-width: 1200px;
 }
 
 .itemWrapper {
@@ -94,7 +98,7 @@
   border: 1px solid $color-golden-o20;
 
   &:hover {
-    cursor:pointer;
+    cursor: pointer;
     border-color: $color-golden;
   }
 }
