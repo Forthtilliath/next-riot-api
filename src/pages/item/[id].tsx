@@ -10,7 +10,7 @@ import React from 'react';
 import Error from '@/features/Error';
 
 import { getItem } from '@/utils/api/apiRiot';
-import { API_NAME, ASSETS, DEFAULT_LOCALE, PATH } from '@/utils/constantes';
+import { APP_NAME, ASSETS, DEFAULT_LOCALE, PATH } from '@/utils/constantes';
 
 import styles from '@/styles/Item.module.scss';
 import stylesPage from '@/styles/Page.module.scss';
@@ -29,12 +29,12 @@ export default function Item({ item, error }: Props) {
   const router = useRouter();
   const id = router.query.id as string;
 
-  console.log(description)
+  console.log(description);
 
   return (
     <>
       <Head>
-        <title>{`${API_NAME} - ${name}`}</title>
+        <title>{`${APP_NAME} - ${name}`}</title>
       </Head>
 
       <main className={styles.container}>

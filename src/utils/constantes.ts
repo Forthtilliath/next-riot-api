@@ -1,9 +1,9 @@
-import { CSSProperties } from "react";
+import { CSSProperties } from 'react';
 
 /**
  *  `W`hen `i`t's `Wo`rth, `T`hanks `to` `F`orth
  */
-export const API_NAME = 'Wiwottof';
+export const APP_NAME = 'Wiwottof';
 
 export const ASSETS = '/assets/';
 export const VERSION = '13.4.1';

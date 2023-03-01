@@ -10,7 +10,7 @@ import SwitchMap from '@/features/items/SwitchMap';
 import Searchbar from '@/features/Searchbar';
 
 import { getItems } from '@/utils/api/apiRiot';
-import { DEFAULT_LOCALE, MAPS } from '@/utils/constantes';
+import { APP_NAME, DEFAULT_LOCALE, MAPS } from '@/utils/constantes';
 import { useSearchTerm } from '@/utils/hooks';
 import { filterKeys } from '@/utils/methods/object';
 
@@ -32,7 +32,6 @@ export default function Items({ items, error }: Props) {
   const purchasableItems = Object.values(itemsFiltered).filter(
     ([, item]) => item.gold.purchasable && item.gold.base > 0 && item.maps[map],
   );
-  type a = (typeof itemsFiltered)[number][1];
 
   const sortedItems = purchasableItems.reduce(
     (acc, [key, item]) => {
@@ -76,13 +75,11 @@ export default function Items({ items, error }: Props) {
       mythic: [],
     } as TSortedItems,
   );
-  // console.log(sortedItems);
 
   return (
     <>
       <Head>
-        <title>{`League of Forth - ${t('items:title')}`}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>{`${APP_NAME} - ${t('items:title')}`}</title>
       </Head>
       <main className={stylesPage.main}>
         <h1 className={stylesPage.title}>{t('items:title')}</h1>
@@ -120,29 +117,21 @@ export const keysToKeep = [
   'into',
 ] as const;
 
+
+
 export async function getServerSideProps({ locale = DEFAULT_LOCALE }: GetServerSidePropsContext) {
   const items = await getItems(locale);
 
-  // Initialise les props avec les traductions et un array vide typé en cas d'erreur
-  const props = {
-    ...(await serverSideTranslations(locale, ['common', 'items'])),
-    items: [] as ItemFiltered[],
-    error: { hasError: false } as TError,
-  };
-
-  if (items === undefined) {
-    // Erreur lors de la récupération des objets
-    Object.assign(props, {
-      error: { hasError: true, key: 'common:errors:fetch-items' },
-    });
-  } else {
-    // Objets récupérés
-    Object.assign(props, {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'items'])),
       items: filterKeysOfItems(items),
-    });
-  }
-
-  return { props };
+      error: {
+        hasError: !items || Object.keys(items).length === 0,
+        key: 'common:errors:fetch-items',
+      } as TError,
+    },
+  };
 }
 
 /**

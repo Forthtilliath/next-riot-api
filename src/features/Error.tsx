@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 
-import { API_NAME } from '@/utils/constantes';
+import { APP_NAME } from '@/utils/constantes';
 
 import stylesPage from '@/styles/Page.module.scss';
 
@@ -16,7 +16,7 @@ export default function Error({ trans_key }: Props) {
   return (
     <>
       <Head>
-        <title>{`${API_NAME} - ${t(trans_key)}`}</title>
+        <title>{`${APP_NAME} - ${t(trans_key)}`}</title>
       </Head>
 
       <main className={stylesPage.main}>{t(trans_key)}</main>

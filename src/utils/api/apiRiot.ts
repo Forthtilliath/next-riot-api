@@ -69,12 +69,12 @@ export async function getLastVersion() {
  * Retourne la liste des champions disponible. Les informations retournées
  * dépendent de la version du jeu ainsi que de la langue
  */
-export async function getChampions() {
-  // TODO : Recupérer version et langue des cookies
+export async function getChampions(locale: string) {
+  const lang = LANGUAGES.find((lang) => lang.locale === locale)?.locale_full ?? DEFAULT_LOCALE_FULL;
+
   return await fetchDdragon<{ data: Champion[] }>(
-    `/cdn/${options.version}/data/${options.language}/champion.json`,
-    'champions',
-    // ).then((res) => res.data);
+    `/cdn/${options.version}/data/${lang}/champion.json`,
+    `${locale}-champions`,
   ).then((res) => res?.data || []);
 }
 
@@ -87,12 +87,8 @@ export async function getItems(locale: string) {
   // TODO : Recupérer version et langue des cookies
   return await fetchDdragon<{ data: Items }>(
     `/cdn/${options.version}/data/${lang}/item.json`,
-    // `/cdn/${options.version}/data/${options.language}/item.json`,
     `${locale}-items`,
-    // "items"
-    // ).then((res) => res.data);
-  ).then((res) => res?.data);
-  // ).then((res) => res?.data || []);
+  ).then((res) => res?.data || {});
 }
 
 /**
@@ -113,7 +109,7 @@ export async function getItem(
   const item = items[id];
 
   // On évite de récupérer les from de from de from. On veut juste ceux de l'item affiché
-  if (!parent) return {id, ...item};
+  if (!parent) return { id, ...item };
 
   const from: Awaited<Array<ItemWithId>> = await Promise.all(
     item?.from?.map(async (itemId) => ({
@@ -134,11 +130,4 @@ export async function getItem(
     from,
     into,
   };
-}
-
-async function filter<T>(arr: Array<T>, callback: Function) {
-  const fail = Symbol();
-  return (
-    await Promise.all(arr.map(async (item) => ((await callback(item)) ? item : fail)))
-  ).filter((i) => i !== fail);
 }
