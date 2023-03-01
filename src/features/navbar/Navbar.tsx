@@ -1,7 +1,6 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
-import { useState } from 'react';
+import { MouseEvent, useRef, useState } from 'react';
 
 import Burger from './Burger';
 import Menu from './Menu';
@@ -11,7 +10,13 @@ import styles from '@/styles/Navbar.module.scss';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const { pathname } = useRouter();
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+
+  const handleClickOverlay: ClickEvent<HTMLDivElement> = (e) => {
+    if (e.target === overlayRef.current || e.target.hasAttribute('href')) {
+      setOpen(false);
+    }
+  };
 
   return (
     <header className={styles.header}>
@@ -29,7 +34,7 @@ export default function Navbar() {
       <Burger active={open} toggle={() => setOpen((o) => !o)} />
 
       {open && (
-        <div className={styles.overlay} onClick={() => setOpen(false)}>
+        <div className={styles.overlay} onClick={handleClickOverlay} ref={overlayRef}>
           <div className={styles.mobile_menuWrapper}>
             <Menu classes={styles.mobile_menu} />
             <SwitchLanguage classes={styles.mobile_switch} />

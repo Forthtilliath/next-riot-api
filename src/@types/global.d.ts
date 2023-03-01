@@ -91,16 +91,18 @@ type MapLol = {
   mapId: number;
   mapName: string;
   notes: string;
-}
+};
 
 type THasError = {
   hasError: true;
   /** Key for translation */
   key: string;
-}
+};
 type TNoError = {
   hasError: false;
-}
+};
 type TError = THasError | TNoError;
 
 type ObjectValues<T> = T[keyof T];
+
+type ClickEvent<T extends HTMLElement> = (event: React.MouseEvent<T> & { target: T }) => void;

@@ -1,24 +1,25 @@
 import { useRouter } from 'next/router';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 
 import NavItem from './NavItem';
 
-import styles from '@/styles/Navbar.module.scss';
-
 export default function Menu({ classes = '' }) {
   const { pathname } = useRouter();
+  const { t } = useTranslation();
 
   return (
     <menu className={classes}>
       <NavItem pathname={pathname} href="/">
-        Home
+        {t('common:navbar:home')}
       </NavItem>
       <NavItem pathname={pathname} href="/champions">
-        Champions
+        {t('common:navbar:champions')}
       </NavItem>
       <NavItem pathname={pathname} href="/items">
-        Items
+        {t('common:navbar:items')}
       </NavItem>
     </menu>
   );
