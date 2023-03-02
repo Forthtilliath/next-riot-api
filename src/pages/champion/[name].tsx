@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { GetServerSidePropsContext } from 'next';
@@ -55,9 +56,11 @@ export default function Champion({ champion, error }: Props) {
           <h2 className={styles.h2}>{title}</h2>
           <div className={styles.tagsWrapper}>
             {tags.map((tag) => (
-              <span key={tag} className={styles.tag} active="true">
-                {tag}
-              </span>
+              <Link key={tag} href={`/champions/${tag.toLowerCase()}`}>
+                <span className={styles.tag} active="true">
+                  {tag}
+                </span>
+              </Link>
             ))}
           </div>
           <p className={styles.blurb}>{blurb}</p>
