@@ -13,10 +13,7 @@ type TChild = React.ReactElement;
  * - `click`: to control the change in value
  * @param {Function} [callback] - Function callback to call when the value is updated
  */
-export default function RadioGroup({
-  children,
-  callback,
-}: PropsWithChildren<Props>) {
+export default function RadioGroup({ children, callback }: PropsWithChildren<Props>) {
   const childrenArray = React.Children.toArray(children) as TChild[];
   const firstChild = childrenArray[0];
   const [value, setValue] = useState(firstChild?.key);
@@ -31,6 +28,7 @@ export default function RadioGroup({
     return () => {
       updateValue(firstChild);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -40,7 +38,7 @@ export default function RadioGroup({
           active: (value === child.key).toString(),
           tabIndex: value === child.key ? -1 : 0,
           onClick: () => updateValue(child),
-        })
+        }),
       )}
     </>
   );

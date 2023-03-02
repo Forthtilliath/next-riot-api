@@ -137,3 +137,11 @@ export async function getChampion(locale: string, name: string) {
 
   return champions[name];
 }
+
+// Récupère la valeur max d'info
+// fetch('http://ddragon.leagueoflegends.com/cdn/13.4.1/data/fr_FR/champion.json')
+//   .then((res) => res.json() as Promise<{ data: Record<string, Champion> }>)
+//   .then((res) => res.data)
+//   .then((res) => Object.values(res))
+//   .then((res) => res.map((champ) => Math.max(...Object.values(champ.info))))
+//   .then((res) => console.log(Math.max(...res)));

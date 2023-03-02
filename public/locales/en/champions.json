@@ -8,5 +8,11 @@
     "Assassin": "Assassin",
     "Marksman": "Marksman",
     "Support": "Support"
+  },
+  "info": {
+    "attack": "Attack",
+    "defense": "Defense",
+    "magic": "Magic",
+    "difficulty": "Difficulty"
   }
 }

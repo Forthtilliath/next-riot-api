@@ -1,30 +1,28 @@
-import { useTranslation } from 'next-i18next';
+// import { useTranslation } from 'next-i18next';
 import React from 'react';
 
 import { CHAMPION_TAGS } from '@/utils/constantes';
 
-import RadioGroup from '../RadioGroup';
+import RadioGroupControlled from '../RadioGroupControlled';
 
 import styles from '@/styles/Champions.module.scss';
 
 type Props = {
+  tag: UnionTags | 'All';
   setTag: TSetter<UnionTags | 'All'>;
 };
 
-export default function SwitchTags({ setTag }: Props) {
-  const { t } = useTranslation();
-
+export default function SwitchTags({ tag, setTag }: Props) {
   return (
     <div className={styles.tagsWrapper}>
-      <RadioGroup callback={setTag}>
+      <RadioGroupControlled setValue={setTag} value={tag}>
         <span className={styles.tag}>All</span>
         {CHAMPION_TAGS.map((tag) => (
           <span key={tag} className={styles.tag}>
-            {/* {t(`champions:tags:${tag}`)} */}
             {tag}
           </span>
         ))}
-      </RadioGroup>
+      </RadioGroupControlled>
     </div>
   );
 }
