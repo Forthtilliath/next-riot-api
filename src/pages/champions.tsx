@@ -1,22 +1,27 @@
 import { GetServerSidePropsContext } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useState } from 'react';
 
-import MainLayout from '@/features/layout/mainLayout';
+import LinkToChampion from '@/features/champions/LinkToChampion';
+import SwitchTags from '@/features/champions/SwitchTags';
+import MainLayout from '@/features/layout/MainLayout';
 
 import { getChampions } from '@/utils/api/apiRiot';
 import { DEFAULT_LOCALE } from '@/utils/constantes';
+import { filterKeysOfArrayObjects } from '@/utils/methods/array';
 
 import styles from '@/styles/Champions.module.scss';
 
-type Props = {
-  champions: Awaited<ReturnType<typeof getChampions>>;
-  error: TError;
-};
+type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
 
 export default function Champions({ champions, error }: Props) {
+  const [tag, setTag] = useState<UnionTags | 'All'>('All');
   const { t } = useTranslation();
+
   console.log(champions);
+
+  const championsFiltered = champions.filter((champ) => champ.tags.includes(tag) || tag === 'All');
 
   return (
     <MainLayout title={t('champions:title')}>
@@ -24,23 +29,35 @@ export default function Champions({ champions, error }: Props) {
       {error.hasError ? (
         <h2>{t(error.key)}</h2>
       ) : (
-        <ul>
-          {Object.values(champions).map((champion) => (
-            <li key={champion.id}>{champion.name}</li>
-          ))}
-        </ul>
+        <>
+          <SwitchTags setTag={setTag} />
+
+          <div className={styles.championsWrapper}>
+            {championsFiltered.map(({ key, id, name }) => (
+              <LinkToChampion key={key} id={id} name={name} />
+            ))}
+          </div>
+          {/* <ul>
+            {Object.values(champions).map((champion) => (
+              <li key={champion.id}>{champion.name}</li>
+            ))}
+          </ul> */}
+          {/* Tags radiogroup */}
+        </>
       )}
     </MainLayout>
   );
 }
 
+export const keysToKeep = ['key', 'id', 'name', 'tags'] as const;
+
 export async function getServerSideProps({ locale = DEFAULT_LOCALE }: GetServerSidePropsContext) {
-  const champions = await getChampions(locale);
+  const champions = Object.values(await getChampions(locale));
 
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common', 'champions'])),
-      champions,
+      champions: filterKeysOfArrayObjects(champions, keysToKeep),
       error: {
         hasError: !champions || champions.length === 0,
         key: 'common:errors:fetch-champions',
@@ -48,3 +65,9 @@ export async function getServerSideProps({ locale = DEFAULT_LOCALE }: GetServerS
     },
   };
 }
+
+// function getTags(champions: Champion[]) {
+//   return Array.from(
+//     new Set(champions.reduce<string[]>((tags, champ) => tags.concat(champ.tags), [])),
+//   );
+// }

@@ -2,7 +2,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import MainLayout from '@/features/layout/mainLayout';
+import MainLayout from '@/features/layout/MainLayout';
 
 // import styles from "@/styles/Home.module.scss";
 

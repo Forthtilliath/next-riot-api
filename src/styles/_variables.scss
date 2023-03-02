@@ -1,3 +1,8 @@
+// Signification des abréavations pour les couleurs
+// l15 = lighten 15%
+// d15 = darken 15%
+// o20 = opacity 20%
+
 $color-golden: hsl(45, 38%, 69%);
 $color-golden-l15: hsl(45, 38%, 84%);
 $color-golden-o20: rgba($color-golden, .20);
@@ -10,6 +15,7 @@ $color-purple: hsl(300deg 100% 40%);
 $color-purple-d15: hsl(300deg 100% 25%);
 
 $color-blue-dark: hsl(210, 90%, 4%);
+$color-blue-dark-l10: hsl(210, 90%, 14%);
 
 $font-title: "Goldman", cursive;
 $font-text: 'Poppins', sans-serif;

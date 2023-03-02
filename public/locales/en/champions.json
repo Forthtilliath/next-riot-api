@@ -1,4 +1,12 @@
 {
-    "title": "Champions"
+  "title": "Champions",
+  "tags": {
+    "All": "All",
+    "Fighter": "Fighter",
+    "Tank": "Tank",
+    "Mage": "Mage",
+    "Assassin": "Assassin",
+    "Marksman": "Marksman",
+    "Support": "Support"
   }
-  
+}

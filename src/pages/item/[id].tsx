@@ -8,31 +8,27 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React from 'react';
 
 import Error from '@/features/Error';
-import MainLayout from '@/features/layout/mainLayout';
+import MainLayout from '@/features/layout/MainLayout';
 
 import { getItem } from '@/utils/api/apiRiot';
 import { ASSETS, DEFAULT_LOCALE, PATH } from '@/utils/constantes';
+import { isNonNull } from '@/utils/methods/types';
 
 import styles from '@/styles/Item.module.scss';
-import stylesPage from '@/styles/Page.module.scss';
 
-type Props = {
-  item: ItemDetails;
-  error: TError;
-};
+type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
 
 export default function Item({ item, error }: Props) {
   const router = useRouter();
   const { t } = useTranslation();
 
-  if (error.hasError) {
+  // TODO Utilisation des keys !
+  if (error.hasError || !isNonNull<ItemDetails>(item)) {
     return <Error trans_key={'common:errors:item-not-found'} />;
   }
 
   const { name, description, gold, from, into, depth } = item;
   const id = router.query.id as string;
-
-  console.log(description);
 
   return (
     <MainLayout title={name}>
@@ -108,35 +104,16 @@ export async function getServerSideProps({
   locale = DEFAULT_LOCALE,
   params,
 }: GetServerSidePropsContext) {
-  // Initialise les props avec les traductions et un array vide typé en cas d'erreur
-  const props = {
-    ...(await serverSideTranslations(locale, ['common', 'items'])),
-    items: {} as Items,
-    error: { hasError: false } as TError,
+  const item = (await getItem(locale, params?.id as string)) as ItemDetails | null;
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'items'])),
+      item,
+      error: {
+        hasError: !item,
+        key: 'common:errors:fetch-item',
+      } as TError,
+    },
   };
-
-  // TODO - Params avec ID - Name
-
-  if (!params?.id) {
-    Object.assign(props, {
-      error: { hasError: true, key: 'common:errors:no-id' },
-    });
-    return { props };
-  }
-
-  if (typeof params.id === 'string') {
-    const item = await getItem(locale, params.id);
-
-    if (item === null) {
-      Object.assign(props, {
-        error: { hasError: true, key: 'common:errors:fetch-item' },
-      });
-    } else {
-      Object.assign(props, {
-        item,
-      });
-    }
-  }
-
-  return { props };
 }

@@ -72,10 +72,11 @@ export async function getLastVersion() {
 export async function getChampions(locale: string) {
   const lang = LANGUAGES.find((lang) => lang.locale === locale)?.locale_full ?? DEFAULT_LOCALE_FULL;
 
-  return await fetchDdragon<{ data: Champion[] }>(
+  return await fetchDdragon<{ data: Record<string, Champion> }>(
     `/cdn/${options.version}/data/${lang}/champion.json`,
     `${locale}-champions`,
-  ).then((res) => res?.data || []);
+  ).then((res) => res?.data || {});
+  // .then((res) => Object.values(res));
 }
 
 /**

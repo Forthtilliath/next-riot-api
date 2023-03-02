@@ -6,7 +6,7 @@ import { useState } from 'react';
 import GroupItems from '@/features/items/GroupItems';
 import Searchbar from '@/features/items/Searchbar';
 import SwitchMap from '@/features/items/SwitchMap';
-import MainLayout from '@/features/layout/mainLayout';
+import MainLayout from '@/features/layout/MainLayout';
 
 import { getItems } from '@/utils/api/apiRiot';
 import { DEFAULT_LOCALE, MAPS } from '@/utils/constantes';
@@ -15,10 +15,7 @@ import { filterKeys } from '@/utils/methods/object';
 
 import styles from '@/styles/Items.module.scss';
 
-type Props = {
-  items: ReturnType<typeof filterKeysOfItems>;
-  error: TError;
-};
+type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
 
 export default function Items({ items, error }: Props) {
   const [map, setMap] = useState<ObjectValues<typeof MAPS>>(MAPS.SUMMONER_RIFT);

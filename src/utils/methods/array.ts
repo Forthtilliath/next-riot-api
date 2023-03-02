@@ -1,4 +1,4 @@
-import { findValueInKeys } from './object';
+import { filterKeys, findValueInKeys } from './object';
 
 export function filterObject<T>(item: T, propsToCompare: Array<keyof T>, value: string) {
   return findValueInKeys(item, propsToCompare, value);
@@ -19,3 +19,20 @@ export function filterEntry<T>(
   return findValueInKeys(item, propsToCompare, value);
 }
 
+/**
+ * Filtre les clés des objets afin de ne conserver que celles que l'on a besoin.
+ * @param data - Objets ausquel on veut filtrer les clés
+ * @returns Les objets avec uniquement les clés souhaitées
+ */
+// export function filterKeysOfArrayObjects<T extends Array<Record<string, unknown>>, U>(
+//   data: T,
+//   keys: ReadonlyArray<string>,
+// ) {
+//   return data.map((value) => filterKeys(value, keys));
+// }
+export function filterKeysOfArrayObjects<T extends Array<Record<string, unknown>>, U extends ReadonlyArray<keyof T[number]>>(
+  data: T,
+  keys: U,
+) {
+  return data.map((value) => filterKeys<T[number], U>(value, keys));
+}

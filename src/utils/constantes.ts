@@ -12,6 +12,8 @@ export const PATH = {
   FLAG: ASSETS + 'flags/',
   ITEM: ASSETS + VERSION + '/img/item/',
   MAP: ASSETS + VERSION + '/img/map/',
+  CHAMPION: ASSETS + VERSION + '/img/champion/',
+  COVER: ASSETS + 'champion/centered/'
 } as const;
 
 export const LANGUAGES = [
@@ -40,3 +42,20 @@ export const CSS_URL = {
   SUMMONER_RIFT: { '--url': `url('${PATH.MAP}map11.png')` } as CSSProperties,
   HOWLING_ABYSS: { '--url': `url('${PATH.MAP}map12.png')` } as CSSProperties,
 };
+
+// export const CHAMPION_TAGS = [
+//   'fighter',
+//   'tank',
+//   'mage',
+//   'assassin',
+//   'marksman',
+//   'support',
+// ] as const;
+export const CHAMPION_TAGS = [
+  'Fighter',
+  'Tank',
+  'Mage',
+  'Assassin',
+  'Marksman',
+  'Support',
+] as const;

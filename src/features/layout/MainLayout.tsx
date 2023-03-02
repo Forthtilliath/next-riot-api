@@ -14,7 +14,7 @@ export default function MainLayout({ title, children }: PropsWithChildren<Props>
   return (
     <>
       <Head>
-        <title>{`League of Forth - ${title}`}</title>
+        <title>{`WiwottoF - ${title}`}</title>
         <meta name="description" content={`${t('common:layout:description')}`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
