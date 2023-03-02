@@ -42,15 +42,29 @@
 .coverWrapper {
   margin-top: -2rem;
   z-index: -1;
+  
+  position: relative;
   width: 100%;
-}
-.cover {
-  object-fit: cover;
-  width: 100%;
-  border: 1px solid white;
+  height: 300px;
 
   @media (width <= 1200px) {
     margin-inline: max(-5dvw, -3rem);
     width: 100dvw;
   }
+}
+.cover {
+  object-fit: cover;
+  object-position: top;
+}
+
+.row {
+  display: flex;
+}
+
+.slider {
+
+}
+
+.details {
+
 }

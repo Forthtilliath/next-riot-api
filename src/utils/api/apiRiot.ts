@@ -92,10 +92,6 @@ export async function getItems(locale: string) {
   ).then((res) => res?.data || {});
 }
 
-/**
- * Retourne la liste des objets disponible. Les informations retournées
- * dépendent de la version du jeu ainsi que de la langue
- */
 export async function getItem(
   locale: string,
   id: string,
@@ -106,7 +102,6 @@ export async function getItem(
   // Si pas d'objets ou objet non trouvé
   if (!items || !items?.[id]) return null;
 
-  // TODO: Récupérer les objets from et into
   const item = items[id];
 
   // On évite de récupérer les from de from de from. On veut juste ceux de l'item affiché
@@ -131,4 +126,14 @@ export async function getItem(
     from,
     into,
   };
+}
+
+export async function getChampion(locale: string, name: string) {
+  // ): Promise<Champion | null> {
+  const champions = await getChampions(locale);
+
+  // Si pas d'objets ou objet non trouvé
+  if (!champions || !champions?.[name]) return null;
+
+  return champions[name];
 }

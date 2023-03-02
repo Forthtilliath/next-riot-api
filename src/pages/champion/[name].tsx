@@ -8,12 +8,12 @@ import React from 'react';
 
 import MainLayout from '@/features/layout/MainLayout';
 
-import { PATH } from '@/utils/constantes';
+import { DEFAULT_LOCALE, PATH } from '@/utils/constantes';
 
 import styles from '@/styles/Champions.module.scss';
+import { getChampion } from '@/utils/api/apiRiot';
 
-// type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
-type Props = any;
+type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
 
 export default function Champion({ champion, error }: Props) {
   const router = useRouter();
@@ -22,6 +22,7 @@ export default function Champion({ champion, error }: Props) {
   // const { name } = champion;
   const name = router.query.name as string;
   // 1280x720 =>
+  console.log(champion)
 
   return (
     <MainLayout title={name}>
@@ -30,39 +31,52 @@ export default function Champion({ champion, error }: Props) {
           src={PATH.COVER + name + '_0.jpg'}
           alt="cover"
           className={styles.cover}
-          width={1200}
-          height={300}
+          // width={1200}
+          // height={300}
+          // sizes="(max-width: 1200px) 100dvw, 1200px"
+          // style={{ maxWidth: 1200, width: '100dvw', height:'auto' }}
+          // style={{ maxWidth: 1200, width: '100dvw', maxHeight:300 }}
           priority
-          sizes="(max-width: 1200px) 100dvw, 1200px"
+          fill
         />
       </div>
       <h1>{name}</h1>
+      <div className={styles.row}>
+        <div className={styles.slider}>
+
+        </div>
+        <div className={styles.details}>
+          <div className={styles.tagsWrapper}>
+
+          </div>
+        </div>
+      </div>
     </MainLayout>
   );
 }
 
-export async function getServerSideProps({ locale = 'fr' }: GetServerSidePropsContext) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common', 'champions'])),
-    },
-  };
-}
-
-// export async function getServerSideProps({
-//   locale = DEFAULT_LOCALE,
-//   params,
-// }: GetServerSidePropsContext) {
-//   const item = (await getItem(locale, params?.id as string)) as ItemDetails | null;
-
+// export async function getServerSideProps({ locale = 'fr' }: GetServerSidePropsContext) {
 //   return {
 //     props: {
-//       ...(await serverSideTranslations(locale, ['common', 'items'])),
-//       item,
-//       error: {
-//         hasError: !item,
-//         key: 'common:errors:fetch-item',
-//       } as TError,
+//       ...(await serverSideTranslations(locale, ['common', 'champions'])),
 //     },
 //   };
 // }
+
+export async function getServerSideProps({
+  locale = DEFAULT_LOCALE,
+  params,
+}: GetServerSidePropsContext) {
+  const champion = (await getChampion(locale, params?.name as string)) as Champion | null;
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'champions'])),
+      champion,
+      error: {
+        hasError: !champion,
+        key: 'common:errors:fetch-champion',
+      } as TError,
+    },
+  };
+}

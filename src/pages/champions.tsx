@@ -19,8 +19,6 @@ export default function Champions({ champions, error }: Props) {
   const [tag, setTag] = useState<UnionTags | 'All'>('All');
   const { t } = useTranslation();
 
-  console.log(champions);
-
   const championsFiltered = champions.filter((champ) => champ.tags.includes(tag) || tag === 'All');
 
   return (
