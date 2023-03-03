@@ -10,8 +10,10 @@
   },
   "errors": {
     "fetch": "Error while fetching data",
+    "fetch-item": "Error while fetching item or item not found",
     "fetch-items": "Error while fetching items",
-    "item-not-found": "Item not found"
+    "fetch-champion": "Error while fetching champion or champion not found",
+    "fetch-champions": "Error while fetching champions"
   },
   "footer": {
     "coded-by": "Coded by Forth",

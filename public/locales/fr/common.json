@@ -10,8 +10,10 @@
   },
   "errors": {
     "fetch": "Erreur lors de la récupération des données",
+    "fetch-item": "Erreur lors de la récupération de l'objet ou objet non trouvé",
     "fetch-items": "Erreur lors de la récupération des objets",
-    "item-not-found": "Objet non trouvé"
+    "fetch-champion": "Erreur lors de la récupération du champion ou champion non trouvé",
+    "fetch-champions": "Erreur lors de la récupération des champions"
   },
   "footer": {
     "coded-by": "Codé par Forth",

@@ -4,8 +4,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import MainLayout from '@/features/layout/MainLayout';
 
-// import styles from "@/styles/Home.module.scss";
-
 export default function Home() {
   const { t } = useTranslation('home');
   return (

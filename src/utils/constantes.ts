@@ -14,7 +14,7 @@ export const PATH = {
   MAP: ASSETS + VERSION + '/img/map/',
   CHAMPION: ASSETS + VERSION + '/img/champion/',
   COVER: ASSETS + 'champion/centered/',
-  LOADING: ASSETS + 'champion/loading/'
+  LOADING: ASSETS + 'champion/loading/',
 } as const;
 
 export const LANGUAGES = [
@@ -44,14 +44,6 @@ export const CSS_URL = {
   HOWLING_ABYSS: { '--url': `url('${PATH.MAP}map12.png')` } as CSSProperties,
 };
 
-// export const CHAMPION_TAGS = [
-//   'fighter',
-//   'tank',
-//   'mage',
-//   'assassin',
-//   'marksman',
-//   'support',
-// ] as const;
 export const CHAMPION_TAGS = [
   'Fighter',
   'Tank',

@@ -8,7 +8,10 @@ type Props = {
 type TChild = React.ReactElement;
 
 /**
- * Control a group of children radio buttons or radio inputs. It adds 3 properties :
+ * Control a group of children radio buttons or radio inputs. The difference between RadioGroup &
+ * RadioGroupControlled, it's the management of the value.
+ * 
+ * It adds 3 properties :
  * - `active`: to know if the child is active or not;
  * - `tabIndex`: to allow tabulation or not on the child;
  * - `click`: to control the change in value

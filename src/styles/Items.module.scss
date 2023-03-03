@@ -95,9 +95,10 @@
 }
 
 .itemsWrapper {
+  --size: 75px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 75px);
-  grid-template-rows: repeat(auto-fill, 75px);
+  grid-template-columns: repeat(auto-fit, var(--size));
+  grid-template-rows: repeat(auto-fill, var(--size));
   justify-content: space-between;
   gap: 0.25rem;
 
@@ -110,6 +111,10 @@
   display: flex;
   gap: 10px;
   border: 1px solid $color-golden-o20;
+  
+  position: relative;
+  height: var(--size);
+  width: var(--size);
 
   &:hover {
     cursor: pointer;

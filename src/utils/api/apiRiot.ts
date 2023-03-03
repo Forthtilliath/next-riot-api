@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { setupCache } from 'axios-cache-interceptor';
 
-import { DEFAULT_LOCALE_FULL, LANGUAGES } from '../constantes';
+import { DEFAULT_LOCALE_FULL, LANGUAGES, VERSION } from '../constantes';
 import { shuffle } from '../methods/array';
 
 const BASE_URL_DDRAGON = 'https://ddragon.leagueoflegends.com';
@@ -19,52 +19,39 @@ const apiStatic = setupCache(
   }),
 );
 
-const options = {
-  language: 'fr_FR',
-  version: '13.3.1',
-};
-
 async function fetchDdragon<T>(route: string, id: string) {
   return await apiRiot
     .get<T>(route, { id })
     .then((res) => res.data)
-    .catch((err) => {
-      // console.error(err);
-      // return [] as T;
-      return null;
-    });
+    .catch(() => null);
 }
 
 async function fetchStatic<T>(route: string, id: string) {
   return await apiStatic
     .get<T>(route, { id })
     .then((res) => res.data)
-    .catch((err) => {
-      // console.error(err);
-      // return [] as T;
-      return null;
-    });
+    .catch(() => null);
 }
 
 /** Retourne la liste des versions disponibles  */
-export async function getVersions() {
-  return await fetchDdragon<string[]>('/api/versions.json', 'versions');
-}
+// export async function getVersions() {
+//   return await fetchDdragon<string[]>('/api/versions.json', 'versions');
+// }
 
 /** Retourne la liste des langues disponibles */
-export async function getLanguages() {
-  return await fetchDdragon<string[]>('/cdn/languages.json', 'languages');
-}
+// export async function getLanguages() {
+//   return await fetchDdragon<string[]>('/cdn/languages.json', 'languages');
+// }
 
 /** Retourne la liste des langues disponibles */
-export async function getMaps() {
-  return await fetchStatic<MapLol[]>('/docs/lol/maps.json', 'maps');
-}
+// export async function getMaps() {
+//   return await fetchStatic<MapLol[]>('/docs/lol/maps.json', 'maps');
+// }
 
 /** Retourne la dernière version disponible */
-export async function getLastVersion() {
-  return await getVersions().then((res) => res?.[0] || null);
-}
+// export async function getLastVersion() {
+//   return await getVersions().then((res) => res?.[0] || null);
+// }
 
 /**
  * Retourne la liste des champions disponible. Les informations retournées
@@ -74,7 +61,7 @@ export async function getChampions(locale: string) {
   const lang = LANGUAGES.find((lang) => lang.locale === locale)?.locale_full ?? DEFAULT_LOCALE_FULL;
 
   return await fetchDdragon<{ data: Record<string, Champion> }>(
-    `/cdn/${options.version}/data/${lang}/champion.json`,
+    `/cdn/${VERSION}/data/${lang}/champion.json`,
     `${locale}-champions`,
   )
     .then((res) => res?.data || {})
@@ -86,7 +73,6 @@ export async function getChampions(locale: string) {
 }
 
 export async function getChampion(locale: string, name: string) {
-  // ): Promise<Champion | null> {
   const champions = await getChampions(locale);
 
   // Si pas d'objets ou objet non trouvé
@@ -118,9 +104,9 @@ export async function getChampion(locale: string, name: string) {
  */
 export async function getItems(locale: string) {
   const lang = LANGUAGES.find((lang) => lang.locale === locale)?.locale_full ?? DEFAULT_LOCALE_FULL;
-  // TODO : Recupérer version et langue des cookies
+
   return await fetchDdragon<{ data: Items }>(
-    `/cdn/${options.version}/data/${lang}/item.json`,
+    `/cdn/${VERSION}/data/${lang}/item.json`,
     `${locale}-items`,
   ).then((res) => res?.data || {});
 }

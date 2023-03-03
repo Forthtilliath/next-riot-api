@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
-import React, { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 
 import styles from '@/styles/Champion.module.scss';
 

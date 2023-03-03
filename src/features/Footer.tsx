@@ -8,7 +8,8 @@ export default function Footer() {
   return (
     <div className={styles.footer}>
       <p>
-        &copy; {t('common:footer:coded-by')} - {t('common:footer:contest')}
+        &copy; {t('common:footer:coded-by', 'Coded by Forth')} -{' '}
+        {t('common:footer:contest', 'Contest #4: Using a REST API in a web creation')}
       </p>
     </div>
   );

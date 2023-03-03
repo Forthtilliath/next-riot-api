@@ -1,6 +1,3 @@
-// import { useTranslation } from 'next-i18next';
-import React from 'react';
-
 import { CHAMPION_TAGS } from '@/utils/constantes';
 
 import RadioGroupControlled from '../RadioGroupControlled';

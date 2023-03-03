@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 
 import { useTranslation } from 'next-i18next';
-import React from 'react';
 
 import NavItem from './NavItem';
 
@@ -14,14 +13,14 @@ export default function Menu({ classes = '' }) {
       {/* <NavItem pathname={pathname} href="/">
         {t('common:navbar:home')}
       </NavItem> */}
-      <NavItem pathname={pathname} href="/champions">
-        {t('common:navbar:champions')}
+      <NavItem pathname={pathname} href="/champions/all">
+        {t('common:navbar:champions', 'Champions')}
       </NavItem>
       <NavItem pathname={pathname} href="/items">
-        {t('common:navbar:items')}
+        {t('common:navbar:items', 'Items')}
       </NavItem>
       <NavItem pathname={pathname} href="/runes" locked>
-        {t('common:navbar:runes')}
+        {t('common:navbar:runes', 'Runes')}
       </NavItem>
     </menu>
   );

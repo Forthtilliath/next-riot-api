@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 
 import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
-import React from 'react';
 
 import { LANGUAGES } from '@/utils/constantes';
 

@@ -1,6 +1,3 @@
-import React from 'react';
-
-// import { ItemFiltered } from '@/pages/items';
 import LinkToItem from '@/features/items/LinkToItem';
 
 import styles from '@/styles/Items.module.scss';
@@ -13,6 +10,7 @@ type Props = {
 export default function GroupItems({ name, items }: Props) {
   if (items.length === 0) return null;
 
+  // Tri les objets du moins cher au plus cher
   items.sort(([, itemA], [, itemB]) => itemA.gold.total - itemB.gold.total);
 
   return (

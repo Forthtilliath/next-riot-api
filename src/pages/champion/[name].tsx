@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import React from 'react';
 
 import InfoBar from '@/features/champions/InfoBar';
 import LinkToChampion from '@/features/champions/LinkToChampion';
@@ -72,7 +71,7 @@ export default function Champion({ champion, error, filesChamp }: Props) {
         </div>
       </div>
       <div className={styles.moreChampions}>
-        <h2>More champions</h2>
+        <h2>{t('champions:more-champions')}</h2>
         <div className={styles.championsWrapper}>
           {moreChampions.map(({ key, id, name }) => (
             <LinkToChampion key={key} id={id} name={name} styles={styles} />

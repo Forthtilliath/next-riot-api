@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 import { useTranslation } from 'next-i18next';
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
 import styles from '@/styles/Layout.module.scss';
 

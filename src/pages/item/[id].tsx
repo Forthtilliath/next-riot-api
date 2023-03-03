@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import React from 'react';
 
 import Error from '@/features/Error';
 import MainLayout from '@/features/layout/MainLayout';
@@ -22,9 +21,8 @@ export default function Item({ item, error }: Props) {
   const router = useRouter();
   const { t } = useTranslation();
 
-  // TODO Utilisation des keys !
   if (error.hasError || !isNonNull<ItemDetails>(item)) {
-    return <Error trans_key={'common:errors:item-not-found'} />;
+    return <Error trans_key={'common:errors:fetch-item'} />;
   }
 
   const { name, description, gold, from, into, depth } = item;
