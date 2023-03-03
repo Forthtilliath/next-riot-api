@@ -13,7 +13,8 @@ export const PATH = {
   ITEM: ASSETS + VERSION + '/img/item/',
   MAP: ASSETS + VERSION + '/img/map/',
   CHAMPION: ASSETS + VERSION + '/img/champion/',
-  COVER: ASSETS + 'champion/centered/'
+  COVER: ASSETS + 'champion/centered/',
+  LOADING: ASSETS + 'champion/loading/'
 } as const;
 
 export const LANGUAGES = [

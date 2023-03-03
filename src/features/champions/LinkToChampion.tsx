@@ -5,16 +5,16 @@ import React from 'react';
 
 import { PATH } from '@/utils/constantes';
 
-import styles from '@/styles/Champions.module.scss';
+type Props = Pick<Champion, 'id' | 'name'> & {
+  styles: {
+    readonly [key: string]: string;
+  };
+};
 
-type Props = Pick<Champion, 'id' | 'name'>;
-
-export default function LinkToChampion({ id, name }: Props) {
+export default function LinkToChampion({ id, name, styles }: Props) {
   return (
-    <Link href={`/champion/${id}`} className={styles.championWrapper}>
-      {/* 73px car 75px - 1px de border-left - 1px de border-right */}
-        <Image alt={name} src={PATH.CHAMPION + id + '.png'} fill />
-      {/* <Image alt={name} src={PATH.CHAMPION + id + '.png'} width={73} height={73} /> */}
+    <Link href={`/champion/${id.toLowerCase()}`} className={styles.championWrapper}>
+      <Image alt={name} src={PATH.CHAMPION + id + '.png'} fill />
     </Link>
   );
 }

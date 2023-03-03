@@ -25,9 +25,16 @@
 
 .row {
   display: flex;
+  gap: 2rem;
 }
 
 .slider {
+
+  .sliderImage {
+    position: relative;
+    width: 308px;
+    height: 560px;
+  }
   @media (width <= 850px) {
     display: none;
   }

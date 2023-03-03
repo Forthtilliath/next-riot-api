@@ -76,8 +76,40 @@ export async function getChampions(locale: string) {
   return await fetchDdragon<{ data: Record<string, Champion> }>(
     `/cdn/${options.version}/data/${lang}/champion.json`,
     `${locale}-champions`,
-  ).then((res) => res?.data || {});
-  // .then((res) => Object.values(res));
+  )
+    .then((res) => res?.data || {})
+    // Example : AurelionSol => aurelionsol
+    .then((res) => Object.entries(res))
+    // On met toutes les clés en minuscules
+    .then((res) => res.map<[string, Champion]>(([key, val]) => [key.toLowerCase(), val]))
+    .then((res) => Object.fromEntries(res));
+}
+
+export async function getChampion(locale: string, name: string) {
+  // ): Promise<Champion | null> {
+  const champions = await getChampions(locale);
+
+  // Si pas d'objets ou objet non trouvé
+  if (!champions || !champions?.[name]) return null;
+  const champion = champions[name];
+
+  const champs = shuffle(Object.values(champions));
+
+  // Récupère 10 champions avec au moins un des tags du champion à afficher
+  let championsFiltered = new Map<string, Champion>();
+  champs.every((champ) => {
+    champ.tags.forEach((tag) => {
+      if (champion.tags.includes(tag) && !championsFiltered.has(champ.id)) {
+        championsFiltered.set(champ.id, champ);
+      }
+    });
+    return championsFiltered.size < 10;
+  });
+
+  return {
+    ...champion,
+    moreChampions: Array.from(championsFiltered).map(([, champ]) => champ),
+  } as ChampionDetails;
 }
 
 /**
@@ -127,33 +159,6 @@ export async function getItem(
     from,
     into,
   };
-}
-
-export async function getChampion(locale: string, name: string) {
-  // ): Promise<Champion | null> {
-  const champions = await getChampions(locale);
-
-  // Si pas d'objets ou objet non trouvé
-  if (!champions || !champions?.[name]) return null;
-  const champion = champions[name];
-
-  const champs = shuffle(Object.values(champions));
-
-  // Récupère 10 champions avec au moins un des tags du champion à afficher
-  let championsFiltered = new Map<string, Champion>();
-  champs.every((champ) => {
-    champ.tags.forEach((tag) => {
-      if (champion.tags.includes(tag) && !championsFiltered.has(champ.id)) {
-        championsFiltered.set(champ.id, champ);
-      }
-    });
-    return championsFiltered.size < 10;
-  });
-
-  return {
-    ...champion,
-    moreChampions: Array.from(championsFiltered).map(([, champ]) => champ),
-  } as ChampionDetails;
 }
 
 // Récupère la valeur max d'info

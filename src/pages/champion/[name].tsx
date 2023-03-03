@@ -8,14 +8,15 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React from 'react';
 
 import InfoBar from '@/features/champions/InfoBar';
+import LinkToChampion from '@/features/champions/LinkToChampion';
 import Error from '@/features/Error';
 import MainLayout from '@/features/layout/MainLayout';
 
 import { getChampion } from '@/utils/api/apiRiot';
 import { DEFAULT_LOCALE, PATH } from '@/utils/constantes';
+import { capitalize } from '@/utils/methods/string';
 
 import styles from '@/styles/Champion.module.scss';
-import { capitalize } from '@/utils/methods/string';
 
 type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
 
@@ -45,7 +46,12 @@ export default function Champion({ champion, error }: Props) {
       </div>
       <h1>{name}</h1>
       <div className={styles.row}>
-        <div className={styles.slider}>Slider</div>
+        <div className={styles.slider}>
+          <div className={styles.sliderImage}>
+          <Image src={PATH.LOADING + queryName + '_1.jpg'} alt="champion" fill />
+
+          </div>
+        </div>
         <div className={styles.details}>
           <h2 className={styles.h2}>{title}</h2>
           <div className={styles.tagsWrapper}>
@@ -66,13 +72,13 @@ export default function Champion({ champion, error }: Props) {
         </div>
       </div>
       <div className={styles.moreChampions}>
-        {/* Récupérer des champions avec les mêmes tags */}
         <h2>More champions</h2>
         <div className={styles.championsWrapper}>
           {moreChampions.map(({ key, id, name }) => (
-            <Link key={key} href={`/champion/${id.toLowerCase()}`} className={styles.championWrapper}>
-              <Image alt={name} src={PATH.CHAMPION + id + '.png'} fill />
-            </Link>
+            <LinkToChampion key={key} id={id} name={name} styles={styles} />
+            // <Link key={key} href={`/champion/${id.toLowerCase()}`} className={styles.championWrapper}>
+            //   <Image alt={name} src={PATH.CHAMPION + id + '.png'} fill />
+            // </Link>
           ))}
         </div>
       </div>
@@ -84,7 +90,7 @@ export async function getServerSideProps({
   locale = DEFAULT_LOCALE,
   params,
 }: GetServerSidePropsContext) {
-  const champion = (await getChampion(locale, capitalize(params?.name as string))) as ChampionDetails | null;
+  const champion = (await getChampion(locale, params?.name as string)) as ChampionDetails | null;
 
   return {
     props: {

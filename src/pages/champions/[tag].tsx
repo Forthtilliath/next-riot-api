@@ -59,9 +59,10 @@ export default function Champions({ champions, error }: Props) {
 
           <div className={styles.championsWrapper}>
             {championsFiltered.map(({ key, id, name }) => (
-              <Link key={key} href={`/champion/${id.toLowerCase()}`} className={styles.championWrapper}>
-                <Image alt={name} src={PATH.CHAMPION + id + '.png'} fill />
-              </Link>
+              <LinkToChampion key={key} id={id} name={name} styles={styles} />
+              // <Link key={key} href={`/champion/${id.toLowerCase()}`} className={styles.championWrapper}>
+              //   <Image alt={name} src={PATH.CHAMPION + id + '.png'} fill />
+              // </Link>
             ))}
           </div>
         </>
