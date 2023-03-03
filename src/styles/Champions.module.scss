@@ -3,27 +3,30 @@
 .tagsWrapper {
   display: flex;
   gap: 1rem;
-}
+  flex-wrap: wrap;
+  justify-content: center;
 
-.tag {
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  border: 1px solid $color-golden-o20;
-  cursor: pointer;
-
-  font-size: 1.1rem;
-  font-family: $font-text;
-
-  &[active='true'] {
-    border-color: $color-golden;
-    background: $color-blue-dark-l10;
+  .tag {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid $color-golden-o20;
+    cursor: pointer;
+  
+    font-size: 1.1rem;
+    font-family: $font-text;
+  
+    &[active='true'] {
+      border-color: $color-golden;
+      background: $color-blue-dark-l10;
+    }
   }
 }
 
 .championsWrapper {
+  --size: 75px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 75px);
-  grid-template-rows: repeat(auto-fill, 75px);
+  grid-template-columns: repeat(auto-fit, var(--size));
+  grid-template-rows: repeat(auto-fill, var(--size));
   justify-content: space-between;
   gap: 0.25rem;
 
@@ -31,104 +34,15 @@
   font-family: $font-text;
   width: 100%;
 
-  a:hover {
-    filter: brightness(1.4);
-    transform: scale(1.1);
-    overflow: hidden;
-  }
-}
+  .championWrapper {
+    position: relative;
+    height: var(--size);
+    width: var(--size);
 
-// Champion Page
-.coverWrapper {
-  margin-top: -2rem;
-  z-index: -1;
-  border-radius: 0 0 0.5rem 0.5rem;
-  overflow: hidden;
-
-  position: relative;
-  width: 100%;
-  height: 300px;
-
-  @media (width <= 1200px) {
-    margin-inline: max(-5dvw, -3rem);
-    width: 100dvw;
-    border-radius: 0;
-  }
-}
-.cover {
-  object-fit: cover;
-  object-position: top;
-}
-
-.row {
-  display: flex;
-}
-
-.slider {
-  @media (width <= 850px) {
-    display: none;
-  }
-}
-
-.details {
-  .h2 {
-    margin-bottom: 0.5rem;
-    font-size: 1.25rem;
-  }
-  .tag {
-    font-size: 1rem;
-  }
-}
-
-.blurb {
-  margin-top: 1rem;
-  font-size: 1.1rem;
-  font-family: $font-text;
-}
-
-.infos {
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(2, 300px);
-  gap: 1rem;
-
-  margin-top: 1rem;
-
-  .label {
-    font-family: $font-text;
-    font-size: .9rem;
-  }
-
-  .infobarWrapper {
-    width: 100%;
-    border: 1px solid $color-golden-o20;
-    border-radius: 0.5rem;
-
-    .infobar {
-      text-align: right;
-      padding-right: 1rem;
-      font-weight: 600;
-      color: $color-blue-dark;
-      font-family: $font-text;
-      width: var(--value);
-      border-radius: 0.5rem;
-
-      &.infobarAttack {
-        background: hsl(0deg 100% 60%);
-      }
-      &.infobarDefense {
-        background: hsl(37deg 100% 50%);
-      }
-      &.infobarMagic {
-        background: hsl(217deg 100% 50%);
-      }
-      &.infobarDifficulty {
-        background: hsl(120deg 100% 30%);
-      }
+    &:hover {
+      filter: brightness(1.4);
+      transform: scale(1.1);
+      overflow: hidden;
     }
   }
-}
-
-.moreChampions {
-
 }

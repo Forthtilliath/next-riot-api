@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { GetServerSidePropsContext } from 'next';
@@ -10,7 +12,7 @@ import SwitchTags from '@/features/champions/SwitchTags';
 import MainLayout from '@/features/layout/MainLayout';
 
 import { getChampions } from '@/utils/api/apiRiot';
-import { CHAMPION_TAGS, DEFAULT_LOCALE } from '@/utils/constantes';
+import { CHAMPION_TAGS, DEFAULT_LOCALE, PATH } from '@/utils/constantes';
 import { filterKeysOfArrayObjects } from '@/utils/methods/array';
 import { capitalize } from '@/utils/methods/string';
 
@@ -57,7 +59,9 @@ export default function Champions({ champions, error }: Props) {
 
           <div className={styles.championsWrapper}>
             {championsFiltered.map(({ key, id, name }) => (
-              <LinkToChampion key={key} id={id} name={name} />
+              <Link key={key} href={`/champion/${id.toLowerCase()}`} className={styles.championWrapper}>
+                <Image alt={name} src={PATH.CHAMPION + id + '.png'} fill />
+              </Link>
             ))}
           </div>
         </>

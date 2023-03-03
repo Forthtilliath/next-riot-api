@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
 import React, { CSSProperties } from 'react';
 
-import styles from '@/styles/Champions.module.scss';
+import styles from '@/styles/Champion.module.scss';
 
 type Props = {
   label: string;

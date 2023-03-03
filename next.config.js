@@ -17,15 +17,15 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
   i18n,
-  
+
   async redirects() {
     return [
       {
         source: '/champions',
         destination: '/champions/all',
         permanent: true,
-      },
-    ]
+      }
+    ];
   },
 };
 

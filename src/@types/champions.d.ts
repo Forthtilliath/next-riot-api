@@ -8,12 +8,6 @@ declare global {
     name: string;
     title: string;
     blurb: string;
-    // info: {
-    //   attack: number;
-    //   defense: number;
-    //   magic: number;
-    //   difficulty: number;
-    // };
     info: Record<UnionInfos, number>;
     image: {
       full: string;
@@ -52,6 +46,10 @@ declare global {
   type UnionTags = (typeof CHAMPION_TAGS)[number];
 
   type UnionInfos = 'attack' | 'defense' | 'magic' | 'difficulty';
+
+  type ChampionDetails = Champion & {
+    moreChampions: Champion[];
+  };
 }
 
 export {};

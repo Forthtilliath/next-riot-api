@@ -8,8 +8,6 @@ import Footer from '@/features/Footer';
 import Navbar from '@/features/navbar/Navbar';
 
 import '@/styles/globals.scss';
-import { GetServerSidePropsContext } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -22,11 +20,3 @@ function App({ Component, pageProps }: AppProps) {
 }
 
 export default appWithTranslation(App, nextI18nConfig);
-
-export async function getServerSideProps({ locale = 'fr' }: GetServerSidePropsContext) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common', 'champions'])),
-    },
-  };
-}

@@ -14,7 +14,8 @@ import MainLayout from '@/features/layout/MainLayout';
 import { getChampion } from '@/utils/api/apiRiot';
 import { DEFAULT_LOCALE, PATH } from '@/utils/constantes';
 
-import styles from '@/styles/Champions.module.scss';
+import styles from '@/styles/Champion.module.scss';
+import { capitalize } from '@/utils/methods/string';
 
 type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
 
@@ -22,16 +23,14 @@ export default function Champion({ champion, error }: Props) {
   const router = useRouter();
   const { t } = useTranslation();
 
-  // TODO Utilisation des keys !
   if (error.hasError) {
     return <Error trans_key={error.key} />;
-    // return <Error trans_key={'common:errors:champion-not-found'} />;
   }
 
-  const { name, tags, title, blurb, info } = champion as Champion;
+  const { name, tags, title, blurb, info, moreChampions } = champion as NonNullable<
+    typeof champion
+  >;
   const queryName = router.query.name as string;
-
-  console.log(champion);
 
   return (
     <MainLayout title={name}>
@@ -40,11 +39,6 @@ export default function Champion({ champion, error }: Props) {
           src={PATH.COVER + queryName + '_0.jpg'}
           alt="cover"
           className={styles.cover}
-          // width={1200}
-          // height={300}
-          // sizes="(max-width: 1200px) 100dvw, 1200px"
-          // style={{ maxWidth: 1200, width: '100dvw', height:'auto' }}
-          // style={{ maxWidth: 1200, width: '100dvw', maxHeight:300 }}
           priority
           fill
         />
@@ -71,26 +65,26 @@ export default function Champion({ champion, error }: Props) {
           </div>
         </div>
       </div>
-      <div className={styles.moreChamptions}>
+      <div className={styles.moreChampions}>
         {/* Récupérer des champions avec les mêmes tags */}
+        <h2>More champions</h2>
+        <div className={styles.championsWrapper}>
+          {moreChampions.map(({ key, id, name }) => (
+            <Link key={key} href={`/champion/${id.toLowerCase()}`} className={styles.championWrapper}>
+              <Image alt={name} src={PATH.CHAMPION + id + '.png'} fill />
+            </Link>
+          ))}
+        </div>
       </div>
     </MainLayout>
   );
 }
 
-// export async function getServerSideProps({ locale = 'fr' }: GetServerSidePropsContext) {
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale, ['common', 'champions'])),
-//     },
-//   };
-// }
-
 export async function getServerSideProps({
   locale = DEFAULT_LOCALE,
   params,
 }: GetServerSidePropsContext) {
-  const champion = (await getChampion(locale, params?.name as string)) as Champion | null;
+  const champion = (await getChampion(locale, capitalize(params?.name as string))) as ChampionDetails | null;
 
   return {
     props: {

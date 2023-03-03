@@ -1,0 +1,23 @@
+@import './variables';
+
+.tagsWrapper {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .tag {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid $color-golden-o20;
+    cursor: pointer;
+  
+    font-size: 1.1rem;
+    font-family: $font-text;
+  
+    &[active='true'] {
+      border-color: $color-golden;
+      background: $color-blue-dark-l10;
+    }
+  }
+}

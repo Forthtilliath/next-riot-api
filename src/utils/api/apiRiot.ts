@@ -2,6 +2,7 @@ import Axios from 'axios';
 import { setupCache } from 'axios-cache-interceptor';
 
 import { DEFAULT_LOCALE_FULL, LANGUAGES } from '../constantes';
+import { shuffle } from '../methods/array';
 
 const BASE_URL_DDRAGON = 'https://ddragon.leagueoflegends.com';
 const BASE_URL_STATIC = 'https://static.developer.riotgames.com';
@@ -134,8 +135,25 @@ export async function getChampion(locale: string, name: string) {
 
   // Si pas d'objets ou objet non trouvé
   if (!champions || !champions?.[name]) return null;
+  const champion = champions[name];
 
-  return champions[name];
+  const champs = shuffle(Object.values(champions));
+
+  // Récupère 10 champions avec au moins un des tags du champion à afficher
+  let championsFiltered = new Map<string, Champion>();
+  champs.every((champ) => {
+    champ.tags.forEach((tag) => {
+      if (champion.tags.includes(tag) && !championsFiltered.has(champ.id)) {
+        championsFiltered.set(champ.id, champ);
+      }
+    });
+    return championsFiltered.size < 10;
+  });
+
+  return {
+    ...champion,
+    moreChampions: Array.from(championsFiltered).map(([, champ]) => champ),
+  } as ChampionDetails;
 }
 
 // Récupère la valeur max d'info

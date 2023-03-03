@@ -5,7 +5,8 @@
   "navbar": {
     "home": "Home",
     "champions": "Champions",
-    "items": "Items"
+    "items": "Items",
+    "runes": "Runes"
   },
   "errors": {
     "fetch": "Error while fetching data",

@@ -75,11 +75,19 @@
     &.active {
       background-size: 260% 260%, 100% 100%;
     }
+
+    &.locked {
+      pointer-events: none;
+    }
   }
 }
 
 .navItem {
   list-style: none;
+
+  &:has(.locked) {
+    cursor: no-drop;
+  }
 }
 
 /* #033e7f */
@@ -137,6 +145,11 @@
 
     &:hover, &.active {
       color: $color-golden-l15;
+    }
+
+    &.locked {
+      cursor: no-drop;
+      pointer-events: none;
     }
   }
 }
