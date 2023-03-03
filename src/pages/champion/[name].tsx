@@ -9,18 +9,19 @@ import React from 'react';
 
 import InfoBar from '@/features/champions/InfoBar';
 import LinkToChampion from '@/features/champions/LinkToChampion';
+import Slider from '@/features/champions/Slider';
 import Error from '@/features/Error';
 import MainLayout from '@/features/layout/MainLayout';
 
+import { getChampionFiles } from '@/utils/api/apiLocale';
 import { getChampion } from '@/utils/api/apiRiot';
 import { DEFAULT_LOCALE, PATH } from '@/utils/constantes';
-import { capitalize } from '@/utils/methods/string';
 
 import styles from '@/styles/Champion.module.scss';
 
 type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
 
-export default function Champion({ champion, error }: Props) {
+export default function Champion({ champion, error, filesChamp }: Props) {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -48,8 +49,8 @@ export default function Champion({ champion, error }: Props) {
       <div className={styles.row}>
         <div className={styles.slider}>
           <div className={styles.sliderImage}>
-          <Image src={PATH.LOADING + queryName + '_1.jpg'} alt="champion" fill />
-
+            {/* // TODO : Récupérer les images via public */}
+            <Slider images={filesChamp} />
           </div>
         </div>
         <div className={styles.details}>
@@ -76,9 +77,6 @@ export default function Champion({ champion, error }: Props) {
         <div className={styles.championsWrapper}>
           {moreChampions.map(({ key, id, name }) => (
             <LinkToChampion key={key} id={id} name={name} styles={styles} />
-            // <Link key={key} href={`/champion/${id.toLowerCase()}`} className={styles.championWrapper}>
-            //   <Image alt={name} src={PATH.CHAMPION + id + '.png'} fill />
-            // </Link>
           ))}
         </div>
       </div>
@@ -92,10 +90,17 @@ export async function getServerSideProps({
 }: GetServerSidePropsContext) {
   const champion = (await getChampion(locale, params?.name as string)) as ChampionDetails | null;
 
+  const filesChamp = getChampionFiles(params?.name as string).sort((nameA, nameB) =>
+    nameA.localeCompare(nameB, locale, {
+      numeric: true,
+    }),
+  );
+
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common', 'champions'])),
       champion,
+      filesChamp,
       error: {
         hasError: !champion,
         key: 'common:errors:fetch-champion',

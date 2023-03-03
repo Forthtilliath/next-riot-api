@@ -14,7 +14,7 @@ type Props = Pick<Champion, 'id' | 'name'> & {
 export default function LinkToChampion({ id, name, styles }: Props) {
   return (
     <Link href={`/champion/${id.toLowerCase()}`} className={styles.championWrapper}>
-      <Image alt={name} src={PATH.CHAMPION + id + '.png'} fill />
+      <Image alt={name} src={PATH.CHAMPION + id + '.png'} fill sizes='100px' />
     </Link>
   );
 }
