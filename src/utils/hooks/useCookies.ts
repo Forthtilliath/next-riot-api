@@ -24,7 +24,7 @@ export function useCookies() {
 
     // Si aucun cookie n'existe, on met la dernière version
     const lastVersion = await getLastVersion();
-    setVersion(lastVersion);
+    setVersion(lastVersion ?? '');
   };
 
   const loadLanguage = async () => {
