@@ -20,9 +20,20 @@ const nextConfig = {
 
   async redirects() {
     return [
+    
+      {
+        source: '/',
+        destination: '/champions/all',
+        permanent: true,
+      },
       {
         source: '/champions',
         destination: '/champions/all',
+        permanent: true,
+      },
+      {
+        source: '/_errors',
+        destination: '/',
         permanent: true,
       }
     ];

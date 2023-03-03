@@ -49,7 +49,6 @@ export default function Champion({ champion, error, filesChamp }: Props) {
       <div className={styles.row}>
         <div className={styles.slider}>
           <div className={styles.sliderImage}>
-            {/* // TODO : Récupérer les images via public */}
             <Slider images={filesChamp} />
           </div>
         </div>
