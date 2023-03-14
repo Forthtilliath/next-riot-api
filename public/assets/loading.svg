@@ -1,7 +1,7 @@
 <svg xmlns:svg="http://www.w3.org/2000/svg"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" width="32px" height="32px" viewBox="0 0 128 128" xml:space="preserve">
-    <g style="translate:48px 48px">
+    <g style="translate:calc(50% - 32px) calc(50% - 32px)">
         <circle cx="8" cy="32" r="8" fill="#0095ff"/>
         <circle cx="8" cy="32" r="8" fill="#55b8ff" transform="rotate(45,32,32)"/>
         <circle cx="8" cy="32" r="8" fill="#94d3ff" transform="rotate(90,32,32)"/>

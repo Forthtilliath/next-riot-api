@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import LinkToChampion from '@/features/champions/LinkToChampion';
 import SwitchTags from '@/features/champions/SwitchTags';
@@ -55,13 +55,11 @@ export default function Champions({ champions, error }: Props) {
         <>
           <SwitchTags setTag={setTag} tag={tag} />
 
-          <Suspense fallback={<>Chargement des champions</>}>
-            <div className={styles.championsWrapper}>
-              {championsFiltered.map(({ key, id, name }) => (
-                <LinkToChampion key={key} id={id} name={name} styles={styles} />
-              ))}
-            </div>
-          </Suspense>
+          <div className={styles.championsWrapper}>
+            {championsFiltered.map(({ key, id, name }) => (
+              <LinkToChampion key={key} id={id} name={name} styles={styles} />
+            ))}
+          </div>
         </>
       )}
     </MainLayout>
