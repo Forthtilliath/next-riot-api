@@ -45,8 +45,8 @@ dependencies:
     specifier: 13.1.6
     version: 13.1.6(react-dom@18.2.0)(react@18.2.0)(sass@1.58.3)
   next-i18next:
-    specifier: ^13.1.5
-    version: 13.1.5(i18next@22.4.10)(next@13.1.6)(react-i18next@12.2.0)(react@18.2.0)
+    specifier: ^13.3.0
+    version: 13.3.0(i18next@22.4.10)(next@13.1.6)(react-i18next@12.2.0)(react@18.2.0)
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -1972,14 +1972,14 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: false
 
-  /next-i18next@13.1.5(i18next@22.4.10)(next@13.1.6)(react-i18next@12.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-gULKQNQmFYIW6C45cb5ZOHa+sw8XUkibFHTqRqrcfbAa1fcBCh3TgX1KtzA0vzeh9R93BkkvFhm+FuhO3kR9jQ==}
+  /next-i18next@13.3.0(i18next@22.4.10)(next@13.1.6)(react-i18next@12.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-X4kgi51BCOoGdKbv87eZ8OU7ICQDg5IP+T5fNjqDY3os9ea0OKTY4YpAiVFiwcI9XimcUmSPbKO4a9jFUyYSgg==}
     engines: {node: '>=14'}
     peerDependencies:
       i18next: ^22.0.6
       next: '>= 12.0.0'
       react: '>= 17.0.2'
-      react-i18next: ^12.1.5
+      react-i18next: ^12.2.0
     dependencies:
       '@babel/runtime': 7.21.0
       '@types/hoist-non-react-statics': 3.3.1
