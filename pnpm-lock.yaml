@@ -21,11 +21,11 @@ dependencies:
     specifier: ^3.0.18
     version: 3.0.18
   axios:
-    specifier: ^1.5.1
-    version: 1.5.1
+    specifier: ^1.6.0
+    version: 1.6.0
   axios-cache-interceptor:
     specifier: ^1.0.1
-    version: 1.0.1(axios@1.5.1)
+    version: 1.0.1(axios@1.6.0)
   classnames:
     specifier: ^2.3.2
     version: 2.3.2
@@ -697,20 +697,20 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
-  /axios-cache-interceptor@1.0.1(axios@1.5.1):
+  /axios-cache-interceptor@1.0.1(axios@1.6.0):
     resolution: {integrity: sha512-ClLc3CMA4SBhHL7remPuwlA7jgmUFYrYiw10Ax3g9J5lEKCGTO2lGohuzH/BR4RTFMZS7Kka05gAliLl5L/MeQ==}
     engines: {node: '>=12'}
     peerDependencies:
       axios: ^1
     dependencies:
-      axios: 1.5.1
+      axios: 1.6.0
       cache-parser: 1.2.4
       fast-defer: 1.1.7
       object-code: 1.2.4
     dev: false
 
-  /axios@1.5.1:
-    resolution: {integrity: sha512-Q28iYCWzNHjAm+yEAot5QaAMxhMghWLFVf7rRdwhUI+c2jix2DUXjAHXVi+s1ibs3mjPO/cCgbA++3BjD0vP/A==}
+  /axios@1.6.0:
+    resolution: {integrity: sha512-EZ1DYihju9pwVB+jg67ogm+Tmqc6JmhamRN6I4Zt8DfZu5lbcQGw3ozH9lFejSJgs/ibaef3A9PMXPLeefFGJg==}
     dependencies:
       follow-redirects: 1.15.2
       form-data: 4.0.0
