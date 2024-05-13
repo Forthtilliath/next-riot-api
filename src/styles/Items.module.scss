@@ -97,8 +97,7 @@
 .itemsWrapper {
   --size: 75px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, var(--size));
-  grid-template-rows: repeat(auto-fill, var(--size));
+  grid-template-columns: repeat(auto-fill, var(--size));
   justify-content: space-between;
   gap: 0.25rem;
 
