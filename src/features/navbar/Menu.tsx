@@ -19,9 +19,6 @@ export default function Menu({ classes = '' }) {
       <NavItem pathname={pathname} href="/items">
         {t('common:navbar:items', 'Items')}
       </NavItem>
-      <NavItem pathname={pathname} href="/runes" locked>
-        {t('common:navbar:runes', 'Runes')}
-      </NavItem>
     </menu>
   );
 }
