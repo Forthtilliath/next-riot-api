@@ -100,10 +100,9 @@
 
 .itemsWrapper {
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
   justify-content: space-between;
   gap: 1rem;
-  grid-template-rows: repeat(auto-fill, 75px);
-  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
   width: 100%;
 
   .link {
