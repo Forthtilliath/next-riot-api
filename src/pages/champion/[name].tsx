@@ -14,14 +14,13 @@ import MainLayout from '@/features/layout/MainLayout';
 
 import { getChampionFiles } from '@/utils/api/apiLocale';
 import { getChampion } from '@/utils/api/apiRiot';
-import { DEFAULT_LOCALE, PATH } from '@/utils/constantes';
+import { DEFAULT_LOCALE } from '@/utils/constantes';
 
 import styles from '@/styles/Champion.module.scss';
 
 type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
 
 export default function Champion({ champion, error, filesChamp }: Props) {
-  const router = useRouter();
   const { t } = useTranslation();
 
   if (error.hasError) {
@@ -31,13 +30,12 @@ export default function Champion({ champion, error, filesChamp }: Props) {
   const { name, tags, title, blurb, info, moreChampions } = champion as NonNullable<
     typeof champion
   >;
-  const queryName = router.query.name as string;
 
   return (
     <MainLayout title={name}>
       <div className={styles.coverWrapper}>
         <Image
-          src={PATH.COVER + queryName + '_0.jpg'}
+          src={filesChamp[0].replace('loading', 'centered')}
           alt="cover"
           className={styles.cover}
           priority
