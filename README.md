@@ -1,44 +1,53 @@
 # Riftpedia
 
-![License](https://img.shields.io/github/license/forthtilliath/riftpedia?style=for-the-badge) [![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/) ![TypeScript](https://img.shields.io/badge/-TypeScript-blue?logo=typescript&logoColor=white&style=for-the-badge) [![i18next](https://img.shields.io/badge/i18next-26A69A?style=for-the-badge&logo=i18next&logoColor=white)](https://www.i18next.com/)
+![License](https://img.shields.io/github/license/forthtilliath/riftpedia?style=for-the-badge) [![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/) ![TypeScript](https://img.shields.io/badge/-TypeScript-blue?logo=typescript&logoColor=white&style=for-the-badge) [![next-intl](https://img.shields.io/badge/next--intl-0070F3?style=for-the-badge)](https://next-intl.dev/) ![Sass](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
 
-> Application Next.js utilisant l'API de Riot Games, avec support multilingue via i18next.
+Encyclopédie des champions et objets de **League of Legends**, propulsée par l'API publique [Data Dragon](https://developer.riotgames.com/docs/lol#data-dragon) de Riot Games. Aucune donnée n'est stockée en local : champions, objets et images sont toujours ceux du patch actuellement en ligne.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Fonctionnalités
 
-## Getting Started
+- **Champions** : liste filtrable par rôle (Combattant, Tank, Mage, Assassin, Tireur, Support), fiche détaillée avec stats, splash art et sélecteur de skins.
+- **Objets** : liste filtrable par carte (Faille de l'invocateur / Abîme hurlant) avec recherche, regroupée par palier (départ, basique, épique, légendaire, mythique). Fiche détaillée avec arbre de fusion (composants et évolutions).
+- **Multilingue** (FR/EN) via [next-intl](https://next-intl.dev/), routing localisé (`/fr/...`, `/en/...`).
+- **Toujours à jour** : la version du jeu est résolue dynamiquement (mise en cache 1h) et les images sont chargées directement depuis les CDN de Riot ([Data Dragon](https://ddragon.leagueoflegends.com)) et [CommunityDragon](https://communitydragon.org/) — aucun asset à retélécharger à chaque nouveau patch.
 
-First, run the development server:
+## Stack technique
+
+- [Next.js 16](https://nextjs.org/) (App Router, Turbopack)
+- [React 19](https://react.dev/) / TypeScript
+- [next-intl](https://next-intl.dev/) pour l'internationalisation
+- [Sass](https://sass-lang.com/) (modules CSS)
+- [axios](https://axios-http.com/) + [axios-cache-interceptor](https://axios-cache-interceptor.js.org/) pour l'appel et le cache des données Data Dragon
+
+## Démarrer le projet
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+bun install
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvre [http://localhost:3000](http://localhost:3000) — redirige automatiquement vers `/fr/champions/all`.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+bun run dev            # next dev (Turbopack)
+bun run build           # build de production
+bun run start            # sert le build de production
+bun run lint              # eslint
+bun run check-types        # tsc --noEmit
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+src/
+├── app/[locale]/       # routes App Router (champions, champion/[name], items, item/[id])
+├── features/           # composants (navbar, listes, fiches détail...)
+├── i18n/               # config next-intl (routing, navigation, request)
+├── locales/            # fichiers de traduction FR/EN
+├── middleware / proxy   → src/proxy.ts (résolution de la locale)
+└── utils/
+    ├── api/apiRiot.ts  # appels Data Dragon (champions, objets, version courante)
+    └── constantes.ts   # construction des URLs d'images CDN
+```
