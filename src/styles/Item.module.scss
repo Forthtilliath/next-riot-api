@@ -1,4 +1,5 @@
-@import './variables';
+@use 'sass:color';
+@use './variables' as vars;
 
 .container {
   max-width: 1000px;
@@ -22,7 +23,7 @@
   gap: 5px;
 
   font-weight: 600;
-  font-family: $font-text;
+  font-family: vars.$font-text;
 }
 
 .rowLeft {
@@ -32,14 +33,14 @@
   .cost {
     justify-content: center;
 
-    color: $color-golden;
+    color: vars.$color-golden;
     font-size: 1.2rem;
   }
 }
 
 .description {
-  color: $color-white-d25;
-  font-family: $font-text;
+  color: vars.$color-white-d25;
+  font-family: vars.$font-text;
 
   maintext {
     display: block;
@@ -47,12 +48,12 @@
   }
 
   attention {
-    color: $color-white;
+    color: vars.$color-white;
     font-weight: 600;
   }
 
   ornnBonus {
-    color: lighten($color-white, 5%);
+    color: color.adjust(vars.$color-white, $lightness: 5%);
     font-weight: 700;
   }
 
@@ -61,26 +62,26 @@
   }
 
   status {
-    color: $color-purple;
+    color: vars.$color-purple;
     font-weight: 600;
   }
 
   passive,
   active,
   rarityMythic {
-    color: $color-golden;
+    color: vars.$color-golden;
     font-weight: 600;
   }
 
   rarityLegendary {
-    color: $color-golden;
+    color: vars.$color-golden;
   }
 
   rules {
-    // color: darken($color-white, 45%);
-    color: $color-white-d45;
+    // color: darken(vars.$color-white, 45%);
+    color: vars.$color-white-d45;
     status {
-      color: $color-purple-d15;
+      color: vars.$color-purple-d15;
     }
   }
 }
@@ -116,20 +117,20 @@
 
     &:hover {
       cursor: pointer;
-      border-color: $color-golden;
+      border-color: vars.$color-golden;
     }
   }
 
   .link_name {
-    font-family: $font-text;
+    font-family: vars.$font-text;
     font-size: 1rem;
-    color: $color-golden;
+    color: vars.$color-golden;
     margin-bottom: 0.4rem;
   }
 
   .cost,
   .upgrade {
-    font-family: $font-text;
+    font-family: vars.$font-text;
     font-size: 0.8rem;
   }
 }

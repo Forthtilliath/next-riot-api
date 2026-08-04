@@ -1,12 +1,12 @@
-@import './variables';
+@use './variables' as vars;
 
 .header {
   display: flex;
   align-items: center;
   height: 70px;
 
-  background: $color-blue-dark;
-  box-shadow: 0px 5px 10px 0px $color-golden;
+  background: vars.$color-blue-dark;
+  box-shadow: 0px 5px 10px 0px vars.$color-golden;
   margin-bottom: 2rem;
 
   @media (width <= 850px) {
@@ -37,7 +37,7 @@
   margin-inline: 1rem;
   height: 70px;
 
-  font-family: $font-title;
+  font-family: vars.$font-title;
   font-weight: 700;
   font-size: 1rem;
   color: hsl(211, 95%, 55%);
@@ -49,7 +49,7 @@
   gap: 0.5rem;
   // width: 100%;
   height: 60px;
-  font-family: $font-title;
+  font-family: vars.$font-title;
   font-weight: 700;
   font-size: 1.4rem;
 
@@ -66,8 +66,8 @@
     background-repeat: no-repeat;
     transition: 0.5s ease-out;
 
-    background-image: radial-gradient(closest-side, $color-golden-l15 50%, transparent 100%),
-      linear-gradient(to bottom, $color-golden, $color-golden);
+    background-image: radial-gradient(closest-side, vars.$color-golden-l15 50%, transparent 100%),
+      linear-gradient(to bottom, vars.$color-golden, vars.$color-golden);
     background-size: 0% 0%, 100% 100%;
     background-position: 50% 50%, center;
 
@@ -125,8 +125,8 @@
 }
 
 .mobile_menuWrapper {
-  background: $color-blue-dark;
-  box-shadow: 0px 5px 10px 0px $color-golden;
+  background: vars.$color-blue-dark;
+  box-shadow: 0px 5px 10px 0px vars.$color-golden;
 }
 
 .mobile_menu {
@@ -141,10 +141,10 @@
   .navLink {
     font-size: 2rem;
     text-align: center;
-    color: $color-golden;
+    color: vars.$color-golden;
 
     &:hover, &.active {
-      color: $color-golden-l15;
+      color: vars.$color-golden-l15;
     }
 
     &.locked {
