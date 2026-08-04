@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { setupCache } from 'axios-cache-interceptor';
 
-import { DEFAULT_LOCALE_FULL, LANGUAGES, VERSION } from '../constantes';
+import { DEFAULT_LOCALE_FULL, LANGUAGES } from '../constantes';
 import { shuffle } from '../methods/array';
 
 const BASE_URL_DDRAGON = 'https://ddragon.leagueoflegends.com';
@@ -19,9 +19,9 @@ const apiStatic = setupCache(
   }),
 );
 
-async function fetchDdragon<T>(route: string, id: string) {
+async function fetchDdragon<T>(route: string, id: string, ttl?: number) {
   return await apiRiot
-    .get<T>(route, { id })
+    .get<T>(route, { id, cache: ttl ? { ttl } : undefined })
     .then((res) => res.data)
     .catch(() => null);
 }
@@ -33,10 +33,10 @@ async function fetchStatic<T>(route: string, id: string) {
     .catch(() => null);
 }
 
-/** Retourne la liste des versions disponibles  */
-// export async function getVersions() {
-//   return await fetchDdragon<string[]>('/api/versions.json', 'versions');
-// }
+/** Retourne la liste des versions disponibles, la plus récente en premier */
+export async function getVersions() {
+  return await fetchDdragon<string[]>('/api/versions.json', 'versions');
+}
 
 /** Retourne la liste des langues disponibles */
 // export async function getLanguages() {
@@ -48,10 +48,18 @@ async function fetchStatic<T>(route: string, id: string) {
 //   return await fetchStatic<MapLol[]>('/docs/lol/maps.json', 'maps');
 // }
 
-/** Retourne la dernière version disponible */
-// export async function getLastVersion() {
-//   return await getVersions().then((res) => res?.[0] || null);
-// }
+/**
+ * Retourne la dernière version disponible du jeu. Mise en cache 1h (les
+ * patchs sortent toutes les 2 semaines, pas besoin de revérifier plus souvent)
+ * avec un repli sur une version connue si l'API est indisponible.
+ */
+export async function getLatestVersion() {
+  const versions = await fetchDdragon<string[]>('/api/versions.json', 'versions', 60 * 60 * 1000);
+  return versions?.[0] ?? FALLBACK_VERSION;
+}
+
+/** Utilisée uniquement si l'endpoint /api/versions.json est injoignable */
+const FALLBACK_VERSION = '15.1.1';
 
 /**
  * Retourne la liste des champions disponible. Les informations retournées
@@ -59,10 +67,11 @@ async function fetchStatic<T>(route: string, id: string) {
  */
 export async function getChampions(locale: string) {
   const lang = LANGUAGES.find((lang) => lang.locale === locale)?.locale_full ?? DEFAULT_LOCALE_FULL;
+  const version = await getLatestVersion();
 
   return await fetchDdragon<{ data: Record<string, Champion> }>(
-    `/cdn/${VERSION}/data/${lang}/champion.json`,
-    `${locale}-champions`,
+    `/cdn/${version}/data/${lang}/champion.json`,
+    `${locale}-champions-${version}`,
   )
     .then((res) => res?.data || {})
     // Example : AurelionSol => aurelionsol
@@ -72,7 +81,30 @@ export async function getChampions(locale: string) {
     .then((res) => Object.fromEntries(res));
 }
 
+/**
+ * Retourne la liste des skins d'un champion (numéro + image loading/centered),
+ * à partir de l'endpoint détaillé (le seul à exposer les skins).
+ */
+async function getChampionSkins(locale: string, version: string, champion: Champion) {
+  const lang = LANGUAGES.find((lang) => lang.locale === locale)?.locale_full ?? DEFAULT_LOCALE_FULL;
+
+  const detail = await fetchDdragon<{ data: Record<string, { skins: ChampionSkin[] }> }>(
+    `/cdn/${version}/data/${lang}/champion/${champion.id}.json`,
+    `${locale}-champion-${champion.id}-${version}`,
+  );
+
+  const skins = detail?.data?.[champion.id]?.skins ?? [{ id: '0', num: 0, name: 'default', chromas: false }];
+
+  return skins.map((skin) => ({
+    num: skin.num,
+    name: skin.name,
+    loadingUrl: `${BASE_URL_DDRAGON}/cdn/img/champion/loading/${champion.id}_${skin.num}.jpg`,
+    centeredUrl: `https://cdn.communitydragon.org/latest/champion/${champion.id}/splash-art/centered/skin/${skin.num}`,
+  }));
+}
+
 export async function getChampion(locale: string, name: string) {
+  const version = await getLatestVersion();
   const champions = await getChampions(locale);
 
   // Si pas d'objets ou objet non trouvé
@@ -92,8 +124,11 @@ export async function getChampion(locale: string, name: string) {
     return championsFiltered.size < 10;
   });
 
+  const skins = await getChampionSkins(locale, version, champion);
+
   return {
     ...champion,
+    skins,
     moreChampions: Array.from(championsFiltered).map(([, champ]) => champ),
   } as ChampionDetails;
 }
@@ -104,11 +139,16 @@ export async function getChampion(locale: string, name: string) {
  */
 export async function getItems(locale: string) {
   const lang = LANGUAGES.find((lang) => lang.locale === locale)?.locale_full ?? DEFAULT_LOCALE_FULL;
+  const version = await getLatestVersion();
 
   return await fetchDdragon<{ data: Items }>(
-    `/cdn/${VERSION}/data/${lang}/item.json`,
-    `${locale}-items`,
-  ).then((res) => res?.data || {});
+    `/cdn/${version}/data/${lang}/item.json`,
+    `${locale}-items-${version}`,
+  )
+    .then((res) => res?.data || {})
+    .then((res) => Object.entries(res))
+    .then((res) => res.map<[string, Item]>(([id, item]) => [id, { ...item, version }]))
+    .then((res) => Object.fromEntries(res));
 }
 
 export async function getItem(
@@ -146,11 +186,3 @@ export async function getItem(
     into,
   };
 }
-
-// Récupère la valeur max d'info
-// fetch('http://ddragon.leagueoflegends.com/cdn/13.4.1/data/fr_FR/champion.json')
-//   .then((res) => res.json() as Promise<{ data: Record<string, Champion> }>)
-//   .then((res) => res.data)
-//   .then((res) => Object.values(res))
-//   .then((res) => res.map((champ) => Math.max(...Object.values(champ.info))))
-//   .then((res) => console.log(Math.max(...res)));

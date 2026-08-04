@@ -8,7 +8,7 @@ import Searchbar from '@/features/items/Searchbar';
 import SwitchMap from '@/features/items/SwitchMap';
 import MainLayout from '@/features/layout/MainLayout';
 
-import { getItems } from '@/utils/api/apiRiot';
+import { getItems, getLatestVersion } from '@/utils/api/apiRiot';
 import { DEFAULT_LOCALE, MAPS } from '@/utils/constantes';
 import { useSearchTerm } from '@/utils/hooks';
 import { filterKeys } from '@/utils/methods/object';
@@ -17,7 +17,7 @@ import styles from '@/styles/Items.module.scss';
 
 type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
 
-export default function Items({ items, error }: Props) {
+export default function Items({ items, version, error }: Props) {
   const [map, setMap] = useState<ObjectValues<typeof MAPS>>(MAPS.SUMMONER_RIFT);
   const { t } = useTranslation('');
 
@@ -79,7 +79,7 @@ export default function Items({ items, error }: Props) {
       ) : (
         <>
           <div className={styles.filters}>
-            <SwitchMap setMap={setMap} />
+            <SwitchMap setMap={setMap} version={version} />
             <Searchbar searchTerm={search} onChange={onChange} reset={reset} />
           </div>
 
@@ -97,6 +97,7 @@ export default function Items({ items, error }: Props) {
 }
 
 export const keysToKeep = [
+  'version',
   'name',
   'gold',
   'image',
@@ -108,12 +109,13 @@ export const keysToKeep = [
 ] as const;
 
 export async function getServerSideProps({ locale = DEFAULT_LOCALE }: GetServerSidePropsContext) {
-  const items = await getItems(locale);
+  const [items, version] = await Promise.all([getItems(locale), getLatestVersion()]);
 
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common', 'items'])),
       items: filterKeysOfItems(items),
+      version,
       error: {
         hasError: !items || Object.keys(items).length === 0,
         key: 'common:errors:fetch-items',

@@ -13,6 +13,12 @@ const nextConfig = {
         port: '',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.communitydragon.org',
+        port: '',
+        pathname: '**',
+      },
     ],
     minimumCacheTTL: 60,
   },

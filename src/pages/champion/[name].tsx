@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import { GetServerSidePropsContext } from 'next';
 import { useTranslation } from 'next-i18next';
@@ -12,7 +11,6 @@ import Slider from '@/features/champions/Slider';
 import Error from '@/features/Error';
 import MainLayout from '@/features/layout/MainLayout';
 
-import { getChampionFiles } from '@/utils/api/apiLocale';
 import { getChampion } from '@/utils/api/apiRiot';
 import { DEFAULT_LOCALE } from '@/utils/constantes';
 
@@ -20,14 +18,14 @@ import styles from '@/styles/Champion.module.scss';
 
 type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
 
-export default function Champion({ champion, error, filesChamp }: Props) {
+export default function Champion({ champion, error }: Props) {
   const { t } = useTranslation();
 
   if (error.hasError) {
     return <Error trans_key={error.key} />;
   }
 
-  const { name, tags, title, blurb, info, moreChampions } = champion as NonNullable<
+  const { name, tags, title, blurb, info, skins, moreChampions } = champion as NonNullable<
     typeof champion
   >;
 
@@ -35,7 +33,7 @@ export default function Champion({ champion, error, filesChamp }: Props) {
     <MainLayout title={name}>
       <div className={styles.coverWrapper}>
         <Image
-          src={filesChamp[0].replace('loading', 'centered')}
+          src={skins[0].centeredUrl}
           alt="cover"
           className={styles.cover}
           priority
@@ -46,7 +44,7 @@ export default function Champion({ champion, error, filesChamp }: Props) {
       <div className={styles.row}>
         <div className={styles.slider}>
           <div className={styles.sliderImage}>
-            <Slider images={filesChamp} />
+            <Slider images={skins.map((skin) => skin.loadingUrl)} />
           </div>
         </div>
         <div className={styles.details}>
@@ -71,8 +69,8 @@ export default function Champion({ champion, error, filesChamp }: Props) {
       <div className={styles.moreChampions}>
         <h2>{t('champions:more-champions')}</h2>
         <div className={styles.championsWrapper}>
-          {moreChampions.map(({ key, id, name }) => (
-            <LinkToChampion key={key} id={id} name={name} styles={styles} />
+          {moreChampions.map(({ key, id, name, version }) => (
+            <LinkToChampion key={key} id={id} name={name} version={version} styles={styles} />
           ))}
         </div>
       </div>
@@ -86,17 +84,10 @@ export async function getServerSideProps({
 }: GetServerSidePropsContext) {
   const champion = (await getChampion(locale, params?.name as string)) as ChampionDetails | null;
 
-  const filesChamp = getChampionFiles(params?.name as string).sort((nameA, nameB) =>
-    nameA.localeCompare(nameB, locale, {
-      numeric: true,
-    }),
-  );
-
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common', 'champions'])),
       champion,
-      filesChamp,
       error: {
         hasError: !champion,
         key: 'common:errors:fetch-champion',

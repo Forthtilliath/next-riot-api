@@ -4,6 +4,7 @@ import { ItemFiltered } from '@/pages/items';
 declare global {
   type Items = Record<string, Item>;
   type Item = {
+    version: string;
     name: string;
     description: string;
     colloq: string;

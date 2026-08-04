@@ -10,7 +10,7 @@ import SwitchTags from '@/features/champions/SwitchTags';
 import MainLayout from '@/features/layout/MainLayout';
 
 import { getChampions } from '@/utils/api/apiRiot';
-import { CHAMPION_TAGS, DEFAULT_LOCALE, PATH } from '@/utils/constantes';
+import { CHAMPION_TAGS, DEFAULT_LOCALE } from '@/utils/constantes';
 import { filterKeysOfArrayObjects } from '@/utils/methods/array';
 import { capitalize } from '@/utils/methods/string';
 
@@ -56,8 +56,8 @@ export default function Champions({ champions, error }: Props) {
           <SwitchTags setTag={setTag} tag={tag} />
 
           <div className={styles.championsWrapper}>
-            {championsFiltered.map(({ key, id, name }) => (
-              <LinkToChampion key={key} id={id} name={name} styles={styles} />
+            {championsFiltered.map(({ key, id, name, version }) => (
+              <LinkToChampion key={key} id={id} name={name} version={version} styles={styles} />
             ))}
           </div>
         </>
@@ -66,7 +66,7 @@ export default function Champions({ champions, error }: Props) {
   );
 }
 
-export const keysToKeep = ['key', 'id', 'name', 'tags'] as const;
+export const keysToKeep = ['key', 'id', 'name', 'tags', 'version'] as const;
 
 export async function getServerSideProps({ locale = DEFAULT_LOCALE }: GetServerSidePropsContext) {
   const champions = Object.values(await getChampions(locale));

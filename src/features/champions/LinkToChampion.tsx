@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { PATH } from '@/utils/constantes';
+import { championSquareUrl } from '@/utils/constantes';
 
-type Props = Pick<Champion, 'id' | 'name'> & {
+type Props = Pick<Champion, 'id' | 'name' | 'version'> & {
   styles: {
     readonly [key: string]: string;
   };
 };
 
-export default function LinkToChampion({ id, name, styles }: Props) {
+export default function LinkToChampion({ id, name, version, styles }: Props) {
   return (
     <Link
       href={`/champion/${id.toLowerCase()}`}
@@ -17,7 +17,7 @@ export default function LinkToChampion({ id, name, styles }: Props) {
       style={{ position: 'relative' }}>
       <Image
         alt={name}
-        src={PATH.CHAMPION + id + '.png'}
+        src={championSquareUrl(version, id)}
         fill
         sizes="100px"
         placeholder="blur"
