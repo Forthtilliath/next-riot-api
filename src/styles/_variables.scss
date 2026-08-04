@@ -17,5 +17,5 @@ $color-purple-d15: hsl(300deg 100% 25%);
 $color-blue-dark: hsl(210, 90%, 4%);
 $color-blue-dark-l10: hsl(210, 90%, 14%);
 
-$font-title: "Goldman", cursive;
-$font-text: 'Poppins', sans-serif;
+$font-title: var(--font-goldman), cursive;
+$font-text: var(--font-poppins), sans-serif;

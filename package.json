@@ -6,31 +6,34 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@next/font": "13.5.6",
-    "@types/node": "20.8.10",
-    "@types/react": "18.2.31",
-    "@types/react-dom": "18.2.14",
+    "@types/node": "^26.1.2",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
     "accept-language": "^3.0.18",
-    "axios": "^1.6.8",
-    "axios-cache-interceptor": "^1.5.2",
+    "axios": "^1.19.0",
+    "axios-cache-interceptor": "^1.12.2",
     "classnames": "^2.5.1",
-    "eslint": "8.52.0",
-    "eslint-config-next": "14.0.1",
-    "i18next": "^22.5.1",
-    "i18next-resources-to-backend": "^1.2.1",
-    "next": "13.1.6",
-    "next-i18next": "^13.3.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-i18next": "^12.3.1",
-    "typescript": "4.9.5"
+    "eslint": "^10.8.0",
+    "next": "^16.3.0",
+    "next-intl": "^4.13.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "prettier": "^2.8.8",
-    "sass": "^1.77.1"
+    "@eslint/js": "^10.0.1",
+    "@next/eslint-plugin-next": "^16.3.0",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.9.0",
+    "prettier": "^3.9.6",
+    "sass": "^1.102.0",
+    "typescript-eslint": "^8.66.0"
   }
 }

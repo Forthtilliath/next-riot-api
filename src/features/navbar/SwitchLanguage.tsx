@@ -1,10 +1,11 @@
+'use client';
+
 import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import classNames from 'classnames';
-import { useTranslation } from 'next-i18next';
+import { useLocale } from 'next-intl';
 
+import { Link, usePathname } from '@/i18n/navigation';
 import { LANGUAGES } from '@/utils/constantes';
 
 import styles from '@/styles/Navbar.module.scss';
@@ -23,15 +24,15 @@ type ButtonProps = {
   language: TLanguage;
 };
 export function ButtonLanguage({ language }: ButtonProps) {
-  const { i18n } = useTranslation();
+  const locale = useLocale();
+  const pathname = usePathname();
 
-  const active = i18n.language === language.locale;
-  const { asPath } = useRouter();
+  const active = locale === language.locale;
 
   return (
     <Link
       className={classNames(styles.btn, { [styles.active]: active })}
-      href={asPath}
+      href={pathname}
       locale={language.locale}>
       <Image src={language.flag} alt={language.locale} width={64} height={64} />
     </Link>

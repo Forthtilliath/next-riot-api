@@ -1,7 +1,6 @@
-// import { filterItems, ItemFiltered, UnionFilterItems } from "@/pages/items";
 import { ChangeEvent, useState } from 'react';
 
-import { filterKeysOfItems } from '@/pages/items';
+import { filterKeysOfItems } from '@/utils/items';
 
 import { filterEntry } from '../methods/array';
 

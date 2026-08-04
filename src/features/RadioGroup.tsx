@@ -1,10 +1,19 @@
+'use client';
+
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 
-type Props = {
-  callback?: Function;
+type Props<T> = {
+  callback?: (value: T) => void;
 };
 
-type TChild = React.ReactElement;
+type ChildProps = {
+  children?: React.ReactNode;
+  active?: string;
+  tabIndex?: number;
+  onClick?: () => void;
+};
+
+type TChild = React.ReactElement<ChildProps>;
 
 /**
  * Control a group of children radio buttons or radio inputs. It adds 3 properties :
@@ -13,14 +22,14 @@ type TChild = React.ReactElement;
  * - `click`: to control the change in value
  * @param {Function} [callback] - Function callback to call when the value is updated
  */
-export default function RadioGroup({ children, callback }: PropsWithChildren<Props>) {
+export default function RadioGroup<T>({ children, callback }: PropsWithChildren<Props<T>>) {
   const childrenArray = React.Children.toArray(children) as TChild[];
   const firstChild = childrenArray[0];
   const [value, setValue] = useState(firstChild?.key);
 
   const updateValue = (child: TChild) => {
     setValue(child.key);
-    callback && callback(child.props.children);
+    callback?.(child.props.children as T);
   };
 
   // Reset the state for when we change profile user page

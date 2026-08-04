@@ -1,4 +1,6 @@
-import { useTranslation } from 'next-i18next';
+'use client';
+
+import { useTranslations } from 'next-intl';
 
 import styles from '@/styles/Items.module.scss';
 
@@ -9,7 +11,7 @@ type Props = {
 };
 
 export default function Searchbar({ searchTerm, reset, onChange }: Props) {
-  const { t } = useTranslation('items');
+  const t = useTranslations('items');
 
   return (
     <form className={styles.searchBar}>

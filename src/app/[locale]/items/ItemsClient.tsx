@@ -1,6 +1,6 @@
-import { GetServerSidePropsContext } from 'next';
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+'use client';
+
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import GroupItems from '@/features/items/GroupItems';
@@ -8,18 +8,22 @@ import Searchbar from '@/features/items/Searchbar';
 import SwitchMap from '@/features/items/SwitchMap';
 import MainLayout from '@/features/layout/MainLayout';
 
-import { getItems, getLatestVersion } from '@/utils/api/apiRiot';
-import { DEFAULT_LOCALE, MAPS } from '@/utils/constantes';
+import { filterKeysOfItems } from '@/utils/items';
+import { MAPS } from '@/utils/constantes';
 import { useSearchTerm } from '@/utils/hooks';
-import { filterKeys } from '@/utils/methods/object';
 
 import styles from '@/styles/Items.module.scss';
 
-type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
+type Props = {
+  items: ReturnType<typeof filterKeysOfItems>;
+  version: string;
+  hasError: boolean;
+};
 
-export default function Items({ items, version, error }: Props) {
+export default function ItemsClient({ items, version, hasError }: Props) {
   const [map, setMap] = useState<ObjectValues<typeof MAPS>>(MAPS.SUMMONER_RIFT);
-  const { t } = useTranslation('');
+  const t = useTranslations('items');
+  const tCommon = useTranslations('common');
 
   const [search, onChange, itemsFiltered, reset] = useSearchTerm(items, ['name', 'colloq']);
 
@@ -72,10 +76,10 @@ export default function Items({ items, version, error }: Props) {
   );
 
   return (
-    <MainLayout title={t('items:title')}>
-      <h1>{t('items:title')}</h1>
-      {error.hasError ? (
-        <h2>{t(error.key)}</h2>
+    <MainLayout>
+      <h1>{t('title')}</h1>
+      {hasError ? (
+        <h2>{tCommon('errors.fetch-items')}</h2>
       ) : (
         <>
           <div className={styles.filters}>
@@ -84,55 +88,14 @@ export default function Items({ items, version, error }: Props) {
           </div>
 
           <div className={styles.container}>
-            <GroupItems name={t('items:headers:starter')} items={sortedItems.starter} />
-            <GroupItems name={t('items:headers:basic')} items={sortedItems.basic} />
-            <GroupItems name={t('items:headers:epic')} items={sortedItems.epic} />
-            <GroupItems name={t('items:headers:legendary')} items={sortedItems.legendary} />
-            <GroupItems name={t('items:headers:mythic')} items={sortedItems.mythic} />
+            <GroupItems name={t('headers.starter')} items={sortedItems.starter} />
+            <GroupItems name={t('headers.basic')} items={sortedItems.basic} />
+            <GroupItems name={t('headers.epic')} items={sortedItems.epic} />
+            <GroupItems name={t('headers.legendary')} items={sortedItems.legendary} />
+            <GroupItems name={t('headers.mythic')} items={sortedItems.mythic} />
           </div>
         </>
       )}
     </MainLayout>
   );
-}
-
-export const keysToKeep = [
-  'version',
-  'name',
-  'gold',
-  'image',
-  'colloq',
-  'maps',
-  'depth',
-  'tags',
-  'into',
-] as const;
-
-export async function getServerSideProps({ locale = DEFAULT_LOCALE }: GetServerSidePropsContext) {
-  const [items, version] = await Promise.all([getItems(locale), getLatestVersion()]);
-
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common', 'items'])),
-      items: filterKeysOfItems(items),
-      version,
-      error: {
-        hasError: !items || Object.keys(items).length === 0,
-        key: 'common:errors:fetch-items',
-      } as TError,
-    },
-  };
-}
-
-/**
- * Filtre les clés des objets afin de ne conserver que celles que l'on a besoin.
- * @param {Items} items - Objets ausquel on veut filtrer les clés
- * @returns Les objets avec uniquement les clés souhaitées
- */
-export function filterKeysOfItems(items: Items) {
-  const aItemsFiltered = Object.entries(items).map(([id, item]) => {
-    return [id, filterKeys(item, keysToKeep)] as const;
-  });
-
-  return Object.fromEntries(aItemsFiltered);
 }
