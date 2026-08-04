@@ -1,5 +1,4 @@
-import { keysToKeep } from '@/pages/items';
-import { ItemFiltered } from '@/pages/items';
+import { keysToKeep } from '@/utils/items';
 
 declare global {
   type Items = Record<string, Item>;

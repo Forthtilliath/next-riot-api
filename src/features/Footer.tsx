@@ -1,15 +1,14 @@
-import { useTranslation } from 'next-i18next';
+import { getTranslations } from 'next-intl/server';
 
 import styles from '@/styles/Layout.module.scss';
 
-export default function Footer() {
-  const { t } = useTranslation();
+export default async function Footer() {
+  const t = await getTranslations('common');
 
   return (
     <div className={styles.footer}>
       <p>
-        &copy; {t('common:footer:coded-by', 'Coded by Forth')} -{' '}
-        {t('common:footer:contest', 'Contest #4: Using a REST API in a web creation')}
+        &copy; {t('footer.coded-by')} - {t('footer.contest')}
       </p>
     </div>
   );

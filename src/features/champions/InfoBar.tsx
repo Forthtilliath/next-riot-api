@@ -1,6 +1,7 @@
-import classNames from 'classnames';
-import { useTranslation } from 'next-i18next';
+import { getTranslations } from 'next-intl/server';
 import { CSSProperties } from 'react';
+
+import classNames from 'classnames';
 
 import styles from '@/styles/Champion.module.scss';
 
@@ -17,14 +18,14 @@ const typeClasses = {
   difficulty: styles.infobarDifficulty,
 };
 
-export default function InfoBar({ label, value, type }: Props) {
-  const { t } = useTranslation();
+export default async function InfoBar({ label, value, type }: Props) {
+  const t = await getTranslations('champions');
 
   const percent = `${value * 10}%`;
 
   return (
     <div>
-      <p className={styles.label}>{t('champions:info:' + label)}</p>
+      <p className={styles.label}>{t('info.' + label)}</p>
       <div className={styles.infobarWrapper}>
         <div
           className={classNames(styles.infobar, typeClasses[type])}

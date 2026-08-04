@@ -1,4 +1,6 @@
-import { useTranslation } from 'next-i18next';
+'use client';
+
+import { useTranslations } from 'next-intl';
 
 import MainLayout from './layout/MainLayout';
 
@@ -7,9 +9,9 @@ type Props = {
 };
 
 export default function Error({ trans_key }: Props) {
-  const { t } = useTranslation();
+  const t = useTranslations('common');
   return (
-    <MainLayout title={t(trans_key)}>
+    <MainLayout>
       <h1>{t(trans_key)}</h1>
     </MainLayout>
   );

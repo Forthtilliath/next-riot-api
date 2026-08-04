@@ -1,35 +1,39 @@
 import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 
-import { GetServerSidePropsContext } from 'next';
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { getTranslations } from 'next-intl/server';
 
 import Error from '@/features/Error';
 import MainLayout from '@/features/layout/MainLayout';
 
+import { Link } from '@/i18n/navigation';
 import { getItem } from '@/utils/api/apiRiot';
 import { ASSETS, DEFAULT_LOCALE, itemImgUrl } from '@/utils/constantes';
-import { isNonNull } from '@/utils/methods/types';
 
 import styles from '@/styles/Item.module.scss';
 
-type Props = Awaited<ReturnType<typeof getServerSideProps>>['props'];
+type Props = {
+  params: Promise<{ locale: string; id: string }>;
+};
 
-export default function Item({ item, error }: Props) {
-  const router = useRouter();
-  const { t } = useTranslation();
+export async function generateMetadata({ params }: Props) {
+  const { locale = DEFAULT_LOCALE, id } = await params;
+  const item = await getItem(locale, id);
+  return { title: item ? `WiwottoF - ${item.name}` : 'WiwottoF' };
+}
 
-  if (error.hasError || !isNonNull<ItemDetails>(item)) {
-    return <Error trans_key={'common:errors:fetch-item'} />;
+export default async function ItemPage({ params }: Props) {
+  const { locale = DEFAULT_LOCALE, id } = await params;
+  const item = (await getItem(locale, id)) as ItemDetails | null;
+  const t = await getTranslations('items');
+
+  if (!item) {
+    return <Error trans_key="errors.fetch-item" />;
   }
 
   const { name, description, gold, from, into, depth } = item;
-  const id = router.query.id as string;
 
   return (
-    <MainLayout title={name}>
+    <MainLayout>
       <h1>{name}</h1>
 
       <div className={styles.flex}>
@@ -45,10 +49,10 @@ export default function Item({ item, error }: Props) {
 
       {from.length > 0 && (
         <section className={styles.section}>
-          <h2>{t('items:from')}</h2>
+          <h2>{t('from')}</h2>
           {gold.base > 0 && (
             <div className={styles.fusionCost}>
-              <span>{t('items:merge-cost')} : </span>
+              <span>{t('merge-cost')} : </span>
               <Image src={ASSETS + 'Gold.webp'} alt="Gold" width={16} height={12} />
               <span>{gold.base}</span>
             </div>
@@ -72,7 +76,7 @@ export default function Item({ item, error }: Props) {
 
       {into.length > 0 && (
         <section className={styles.section}>
-          <h2>{t('items:into')}</h2>
+          <h2>{t('into')}</h2>
           <div className={styles.itemsWrapper}>
             {into.map((item, index) => (
               <Link key={`${item.id}-${index}`} href={`/item/${item.id}`} className={styles.link}>
@@ -81,7 +85,7 @@ export default function Item({ item, error }: Props) {
                   <header className={styles.link_name}>{item.name}</header>
 
                   {depth === 3 ? (
-                    <p className={styles.upgrade}>{t('items:upgrade-ornn')}</p>
+                    <p className={styles.upgrade}>{t('upgrade-ornn')}</p>
                   ) : (
                     <div className={styles.cost}>
                       <Image src={ASSETS + 'Gold.webp'} alt="Gold" width={16} height={12} />
@@ -96,22 +100,4 @@ export default function Item({ item, error }: Props) {
       )}
     </MainLayout>
   );
-}
-
-export async function getServerSideProps({
-  locale = DEFAULT_LOCALE,
-  params,
-}: GetServerSidePropsContext) {
-  const item = (await getItem(locale, params?.id as string)) as ItemDetails | null;
-
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common', 'items'])),
-      item,
-      error: {
-        hasError: !item,
-        key: 'common:errors:fetch-item',
-      } as TError,
-    },
-  };
 }

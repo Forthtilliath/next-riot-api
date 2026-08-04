@@ -1,11 +1,18 @@
 import React, { PropsWithChildren } from 'react';
 
-type Props = {
-  setValue: TSetter<any>;
-  value: any;
+type Props<T> = {
+  setValue: TSetter<T>;
+  value: T;
 };
 
-type TChild = React.ReactElement;
+type ChildProps = {
+  children?: React.ReactNode;
+  active?: string;
+  tabIndex?: number;
+  onClick?: () => void;
+};
+
+type TChild = React.ReactElement<ChildProps>;
 
 /**
  * Control a group of children radio buttons or radio inputs. The difference between RadioGroup &
@@ -17,11 +24,11 @@ type TChild = React.ReactElement;
  * - `click`: to control the change in value
  * @param {Function} [callback] - Function callback to call when the value is updated
  */
-export default function RadioGroupControlled({
+export default function RadioGroupControlled<T>({
   children,
   setValue,
   value,
-}: PropsWithChildren<Props>) {
+}: PropsWithChildren<Props<T>>) {
   const childrenArray = React.Children.toArray(children) as TChild[];
 
   return (
@@ -30,7 +37,7 @@ export default function RadioGroupControlled({
         React.cloneElement(child, {
           active: (value === child.props.children).toString(),
           tabIndex: value === child.props.children ? -1 : 0,
-          onClick: () => setValue(child.props.children),
+          onClick: () => setValue(child.props.children as T),
         }),
       )}
     </>

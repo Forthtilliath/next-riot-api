@@ -1,7 +1,7 @@
-import Link from 'next/link';
-
 import classNames from 'classnames';
 import { PropsWithChildren } from 'react';
+
+import { Link } from '@/i18n/navigation';
 
 import styles from '@/styles/Navbar.module.scss';
 

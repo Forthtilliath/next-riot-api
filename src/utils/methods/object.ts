@@ -36,7 +36,7 @@ export function filterKeys<T extends Record<string, unknown>, U extends Readonly
 export function findValueInKeys<T>(item: T, keysToCompare: Array<keyof T>, value: string) {
   return keysToCompare.some((prop) => {
     if (!isObject(item)) return false;
-    if (!item.hasOwnProperty(prop)) return false;
+    if (!Object.prototype.hasOwnProperty.call(item, prop)) return false;
 
     const key = item[prop] as string;
 
