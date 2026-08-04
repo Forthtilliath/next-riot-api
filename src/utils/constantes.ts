@@ -6,16 +6,30 @@ import { CSSProperties } from 'react';
 export const APP_NAME = 'Wiwottof';
 
 export const ASSETS = '/assets/';
-export const VERSION = '13.4.1';
+
+/**
+ * Images (champion/item/map) servies directement depuis le CDN public de
+ * Riot (Data Dragon) plutôt que vendorées en local — toujours à jour avec
+ * la version du jeu passée en paramètre, sans avoir à retélécharger quoi
+ * que ce soit à chaque patch.
+ */
+const DDRAGON_CDN = 'https://ddragon.leagueoflegends.com/cdn';
 
 export const PATH = {
   FLAG: ASSETS + 'flags/',
-  ITEM: ASSETS + VERSION + '/img/item/',
-  MAP: ASSETS + VERSION + '/img/map/',
-  CHAMPION: ASSETS + VERSION + '/img/champion/',
-  COVER: ASSETS + 'champion/centered/',
-  LOADING: ASSETS + 'champion/loading/',
 } as const;
+
+export function championSquareUrl(version: string, id: string) {
+  return `${DDRAGON_CDN}/${version}/img/champion/${id}.png`;
+}
+
+export function itemImgUrl(version: string, id: string) {
+  return `${DDRAGON_CDN}/${version}/img/item/${id}.png`;
+}
+
+export function mapImgUrl(version: string, mapId: string) {
+  return `${DDRAGON_CDN}/${version}/img/map/map${mapId}.png`;
+}
 
 export const LANGUAGES = [
   {
@@ -39,10 +53,12 @@ export const MAPS = {
   HOWLING_ABYSS: '12',
 } as const;
 
-export const CSS_URL = {
-  SUMMONER_RIFT: { '--url': `url('${PATH.MAP}map11.png')` } as CSSProperties,
-  HOWLING_ABYSS: { '--url': `url('${PATH.MAP}map12.png')` } as CSSProperties,
-};
+export function mapCssUrl(version: string): Record<keyof typeof MAPS, CSSProperties> {
+  return {
+    SUMMONER_RIFT: { '--url': `url('${mapImgUrl(version, MAPS.SUMMONER_RIFT)}')` } as CSSProperties,
+    HOWLING_ABYSS: { '--url': `url('${mapImgUrl(version, MAPS.HOWLING_ABYSS)}')` } as CSSProperties,
+  };
+}
 
 export const CHAMPION_TAGS = [
   'Fighter',

@@ -10,7 +10,7 @@ import Error from '@/features/Error';
 import MainLayout from '@/features/layout/MainLayout';
 
 import { getItem } from '@/utils/api/apiRiot';
-import { ASSETS, DEFAULT_LOCALE, PATH } from '@/utils/constantes';
+import { ASSETS, DEFAULT_LOCALE, itemImgUrl } from '@/utils/constantes';
 import { isNonNull } from '@/utils/methods/types';
 
 import styles from '@/styles/Item.module.scss';
@@ -34,7 +34,7 @@ export default function Item({ item, error }: Props) {
 
       <div className={styles.flex}>
         <div className={styles.rowLeft}>
-          <Image alt="item" src={PATH.ITEM + id + '.png'} width={150} height={150} />
+          <Image alt="item" src={itemImgUrl(item.version, id)} width={150} height={150} />
           <div className={styles.cost}>
             <Image src={ASSETS + 'Gold.webp'} alt="Gold" width={20} height={15} />
             <span>{gold.total}</span>
@@ -56,7 +56,7 @@ export default function Item({ item, error }: Props) {
           <div className={styles.itemsWrapper}>
             {from.map((item, index) => (
               <Link key={`${item.id}-${index}`} href={`/item/${item.id}`} className={styles.link}>
-                <Image alt="item" src={PATH.ITEM + item.id + '.png'} width={73} height={73} />
+                <Image alt="item" src={itemImgUrl(item.version, item.id)} width={73} height={73} />
                 <div>
                   <header className={styles.link_name}>{item.name}</header>
                   <div className={styles.cost}>
@@ -76,7 +76,7 @@ export default function Item({ item, error }: Props) {
           <div className={styles.itemsWrapper}>
             {into.map((item, index) => (
               <Link key={`${item.id}-${index}`} href={`/item/${item.id}`} className={styles.link}>
-                <Image alt="item" src={PATH.ITEM + item.id + '.png'} width={73} height={73} />
+                <Image alt="item" src={itemImgUrl(item.version, item.id)} width={73} height={73} />
                 <div>
                   <header className={styles.link_name}>{item.name}</header>
 

@@ -47,7 +47,22 @@ declare global {
 
   type UnionInfos = 'attack' | 'defense' | 'magic' | 'difficulty';
 
+  type ChampionSkin = {
+    id: string;
+    num: number;
+    name: string;
+    chromas: boolean;
+  };
+
+  type ChampionSkinImages = {
+    num: number;
+    name: string;
+    loadingUrl: string;
+    centeredUrl: string;
+  };
+
   type ChampionDetails = Champion & {
+    skins: ChampionSkinImages[];
     moreChampions: Champion[];
   };
 }
