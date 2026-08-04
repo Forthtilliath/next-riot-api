@@ -1,4 +1,4 @@
-@import './variables';
+@use './variables' as vars;
 
 .tagsWrapper {
   display: flex;
@@ -9,15 +9,15 @@
   .tag {
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
-    border: 1px solid $color-golden-o20;
+    border: 1px solid vars.$color-golden-o20;
     cursor: pointer;
   
     font-size: 1.1rem;
-    font-family: $font-text;
+    font-family: vars.$font-text;
   
     &[active='true'] {
-      border-color: $color-golden;
-      background: $color-blue-dark-l10;
+      border-color: vars.$color-golden;
+      background: vars.$color-blue-dark-l10;
     }
   }
 }
@@ -31,7 +31,7 @@
   gap: 0.25rem;
 
   margin-top: 1rem;
-  font-family: $font-text;
+  font-family: vars.$font-text;
   width: 100%;
 
   .championWrapper {

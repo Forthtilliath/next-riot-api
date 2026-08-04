@@ -1,4 +1,4 @@
-@import './variables';
+@use './variables' as vars;
 
 *,
 ::before,
@@ -9,8 +9,8 @@
 }
 
 body {
-  color: $color-white;
-  background: $color-blue-dark;
+  color: vars.$color-white;
+  background: vars.$color-blue-dark;
 }
 
 a {
@@ -21,15 +21,15 @@ a {
 h1 {
   text-align: center;
   font-size: 2rem;
-  font-family: $font-title;
-  color: $color-golden-l15;
+  font-family: vars.$font-title;
+  color: vars.$color-golden-l15;
   margin-bottom: 2rem;
 }
 
 h2 {
   font-size: 1.5rem;
-  font-family: $font-title;
-  color: $color-golden;
+  font-family: vars.$font-title;
+  color: vars.$color-golden;
   margin-bottom: 1.5rem;
 }
 

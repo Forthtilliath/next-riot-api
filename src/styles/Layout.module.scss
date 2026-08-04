@@ -1,4 +1,4 @@
-@import './variables';
+@use './variables' as vars;
 
 .main {
   flex: 1;
@@ -16,7 +16,7 @@
 .footer {
   margin-inline: min(3rem, 5dvw);
   text-align: center;
-  font-family: $font-text;
+  font-family: vars.$font-text;
   font-size: 0.9rem;
 
   p {
